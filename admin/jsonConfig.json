@@ -130,6 +130,18 @@
       "md": 3,
       "lg": 3
     },
+    "createSvg": {
+      "type": "checkbox",
+      "label": {
+        "en": "Create SVG charts for VIS (html.*)",
+        "de": "SVG-Diagramme für VIS erzeugen (html.*)"
+      },
+      "newLine": true,
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 6
+    },
     "_divider": {
       "type": "divider",
       "newLine": true

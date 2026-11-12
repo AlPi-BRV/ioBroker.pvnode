@@ -45,6 +45,8 @@
 | `*_min` / `*_max` | Variability band (paid plans only) |
 | `json.today` / `json.forecast` | Series `[{t, pv, s0, s1, …}]`, t = epoch ms, power in W |
 | `json.daily` | Daily values as returned by pvnode |
+| `html.today` / `html.tomorrow` | Ready-made SVG power curve (dark theme) – show it in VIS with the basic widget "String (unescaped)" |
+| `html.days` | Ready-made SVG bar chart of the daily energy |
 | `info.requestsRemaining` | Remaining requests this month |
 | `info.nextPoll` | Time of the next API request |
 | `control.refresh` | Request a new forecast now (costs one request) |
@@ -75,6 +77,10 @@ Many thanks to the pvnode team for providing their service and the public API th
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### 0.1.4 (2026-11-12)
+
+- Ready-made SVG charts for VIS (`html.today`, `html.tomorrow`, `html.days`)
 
 ### 0.1.3 (2026-11-12)
 

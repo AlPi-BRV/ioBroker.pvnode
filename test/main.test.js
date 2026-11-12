@@ -37,6 +37,9 @@ class FakeAdapter {
         const o = this.objects.get(id) || {};
         this.objects.set(id, { ...o, ...obj, common: { ...(o.common || {}), ...(obj.common || {}) } });
     }
+    async getForeignObjectAsync() {
+        return { common: { language: "de" } };
+    }
     async getObjectAsync(id) {
         return this.objects.get(id) || null;
     }

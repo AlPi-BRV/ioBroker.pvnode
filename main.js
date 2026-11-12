@@ -17,6 +17,7 @@ const { PvnodeApi, PvnodeError } = require('./lib/api');
 const { prepare, computeStates, chartSeries, WEATHER_FIELDS } = require('./lib/compute');
 const { CHANNELS, commonFor } = require('./lib/states');
 const { localDate, isoLocal } = require('./lib/time');
+const { dayChart, daysChart } = require('./lib/svg');
 
 const GRACE_MS = 30 * 1000;
 const MIN_DELAY_MS = 60 * 1000;
@@ -52,6 +53,8 @@ class Pvnode extends utils.Adapter {
         this.polling = false;
         this.stopped = false;
         this.created = new Set();
+        this.lang = 'de';
+        this.stringNames = [];
 
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
@@ -69,6 +72,12 @@ class Pvnode extends utils.Adapter {
     async onReady() {
         await this.setStateAsync('info.connection', false, true);
         await this.createBaseObjects();
+        try {
+            const sys = await this.getForeignObjectAsync('system.config');
+            this.lang = sys && sys.common && sys.common.language === 'de' ? 'de' : 'en';
+        } catch {
+            this.lang = 'de';
+        }
 
         const apiKey = String(this.config.apiKey || '').trim();
         if (!apiKey) {
@@ -418,9 +427,36 @@ class Pvnode extends utils.Adapter {
             await this.setStateAsync(id, { val, ack: true });
         }
         await this.removeSurplus('days', dayCount, MAX_DAYS);
+        if (this.config.createSvg !== false) {
+            await this.updateCharts();
+        }
         if (this.prepared.strings.length) {
             await this.removeSurplus('strings', Math.max(...this.prepared.strings.map(s => s.index)) + 1, MAX_STRINGS);
         }
+    }
+
+    async updateCharts() {
+        const now = Date.now();
+        const p = this.prepared;
+        const opt = { lang: this.lang, stringNames: this.stringNames };
+        const tomorrow = p.values.map(v => localDate(v.t, p.tz)).find(d => d > localDate(now, p.tz));
+        const charts = {
+            'html.today': () => dayChart(p, now, opt),
+            'html.tomorrow': () => (tomorrow ? dayChart(p, now, { ...opt, day: tomorrow }) : ''),
+            'html.days': () => daysChart(p, now, opt),
+        };
+        for (const [id, fn] of Object.entries(charts)) {
+            await this.ensureState(id, { type: 'string', role: 'html', name: this.chartName(id) });
+            await this.setStateAsync(id, fn(), true);
+        }
+    }
+
+    chartName(id) {
+        return {
+            'html.today': { en: 'SVG chart: power curve today', de: 'SVG-Diagramm: Leistungskurve heute' },
+            'html.tomorrow': { en: 'SVG chart: power curve tomorrow', de: 'SVG-Diagramm: Leistungskurve morgen' },
+            'html.days': { en: 'SVG chart: daily energy', de: 'SVG-Diagramm: Tagesertrag' },
+        }[id];
     }
 
     startComputeTimer() {
@@ -636,6 +672,12 @@ class Pvnode extends utils.Adapter {
         const strings = Array.isArray(site.strings) ? site.strings : [];
         const total = strings.reduce((a, s) => a + (Number(s.power_kw) || 0), 0);
         await this.setStateAsync('site.power_kw', Math.round(total * 100) / 100, true);
+        const dirDe = { N: 'Nord', NO: 'Nordost', O: 'Ost', SO: 'Südost', S: 'Süd', SW: 'Südwest', W: 'West', NW: 'Nordwest' };
+        const dirEn = { N: 'North', NO: 'Northeast', O: 'East', SO: 'Southeast', S: 'South', SW: 'Southwest', W: 'West', NW: 'Northwest' };
+        this.stringNames = strings.map(st => {
+            const c = compass(st.orientation);
+            return `${(this.lang === 'de' ? dirDe : dirEn)[c] || c} ${Number(st.power_kw).toLocaleString(this.lang === 'de' ? 'de-DE' : 'en-US')} kWp`;
+        });
         for (let i = 0; i < strings.length && i < MAX_STRINGS; i++) {
             const s = strings[i];
             const ch = `strings.${i}`;
