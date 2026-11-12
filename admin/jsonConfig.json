@@ -1,35 +1,59 @@
 {
+  "i18n": false,
   "type": "panel",
   "items": {
     "_headerAccess": {
       "type": "header",
       "size": 3,
-      "text": { "en": "pvnode access", "de": "pvnode-Zugang" }
+      "text": {
+        "en": "pvnode access",
+        "de": "pvnode-Zugang"
+      }
     },
     "apiKey": {
       "type": "password",
       "visible": true,
-      "label": { "en": "API key", "de": "API-Key" },
-      "help": { "en": "Starts with sk_live_ – create it at pvnode.com", "de": "Beginnt mit sk_live_ – wird auf pvnode.com erzeugt" },
-      "xs": 12, "sm": 12, "md": 6, "lg": 6
+      "label": {
+        "en": "API key",
+        "de": "API-Key"
+      },
+      "help": {
+        "en": "Starts with sk_live_ – create it at pvnode.com",
+        "de": "Beginnt mit sk_live_ – wird auf pvnode.com erzeugt"
+      },
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 6
     },
     "siteId": {
       "type": "selectSendTo",
       "command": "getSites",
       "jsonData": "{\"apiKey\": \"${data.apiKey}\"}",
-      "alsoDependsOn": ["apiKey"],
+      "alsoDependsOn": [
+        "apiKey"
+      ],
       "manual": true,
-      "label": { "en": "Site", "de": "Standort" },
+      "label": {
+        "en": "Site",
+        "de": "Standort"
+      },
       "help": {
         "en": "Select your pvnode site (adapter instance must be running). Leave empty if you only have one site.",
         "de": "pvnode-Standort auswählen (Instanz muss laufen). Leer lassen, wenn es nur einen Standort gibt."
       },
-      "xs": 12, "sm": 12, "md": 6, "lg": 6
+      "xs": 12,
+      "sm": 12,
+      "md": 6,
+      "lg": 6
     },
     "_headerData": {
       "type": "header",
       "size": 3,
-      "text": { "en": "Data", "de": "Daten" },
+      "text": {
+        "en": "Data",
+        "de": "Daten"
+      },
       "newLine": true
     },
     "_planInfo": {
@@ -38,37 +62,73 @@
         "en": "Your plan is detected automatically. The adapter only requests new data when pvnode has computed a new forecast (Free: 1×/day, Light: hourly, Plus: up to every 15 min) and shows the remaining monthly requests in info.requestsRemaining.",
         "de": "Dein Plan wird automatisch erkannt. Der Adapter fragt nur ab, wenn pvnode eine neue Prognose berechnet hat (Kostenlos: 1×/Tag, Light: stündlich, Plus: bis alle 15 min), und zeigt die restlichen Monatsanfragen in info.requestsRemaining."
       },
-      "xs": 12, "sm": 12, "md": 12, "lg": 12
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 12
     },
     "forecastDays": {
       "type": "number",
       "min": 0,
       "max": 7,
-      "label": { "en": "Forecast days (0 = plan maximum)", "de": "Prognosetage (0 = Maximum des Plans)" },
+      "label": {
+        "en": "Forecast days (0 = plan maximum)",
+        "de": "Prognosetage (0 = Maximum des Plans)"
+      },
       "newLine": true,
-      "xs": 12, "sm": 6, "md": 3, "lg": 3
+      "xs": 12,
+      "sm": 6,
+      "md": 3,
+      "lg": 3
     },
     "includeWeather": {
       "type": "checkbox",
-      "label": { "en": "Weather (temperature, wind, rain …)", "de": "Wetter (Temperatur, Wind, Regen …)" },
+      "label": {
+        "en": "Weather (temperature, wind, rain …)",
+        "de": "Wetter (Temperatur, Wind, Regen …)"
+      },
       "newLine": true,
-      "xs": 12, "sm": 6, "md": 3, "lg": 3
+      "xs": 12,
+      "sm": 6,
+      "md": 3,
+      "lg": 3
     },
     "includeIrradiance": {
       "type": "checkbox",
-      "label": { "en": "Irradiance (GHI, DHI, BNI)", "de": "Einstrahlung (GHI, DHI, BNI)" },
-      "xs": 12, "sm": 6, "md": 3, "lg": 3
+      "label": {
+        "en": "Irradiance (GHI, DHI, BNI)",
+        "de": "Einstrahlung (GHI, DHI, BNI)"
+      },
+      "xs": 12,
+      "sm": 6,
+      "md": 3,
+      "lg": 3
     },
     "includeClearsky": {
       "type": "checkbox",
-      "label": { "en": "Clear-sky power", "de": "Leistung bei klarem Himmel" },
-      "xs": 12, "sm": 6, "md": 3, "lg": 3
+      "label": {
+        "en": "Clear-sky power",
+        "de": "Leistung bei klarem Himmel"
+      },
+      "xs": 12,
+      "sm": 6,
+      "md": 3,
+      "lg": 3
     },
     "useVariability": {
       "type": "checkbox",
-      "label": { "en": "Variability band (min/max, paid plans)", "de": "Schwankungsband (min/max, Bezahlpläne)" },
-      "help": { "en": "Used automatically if your plan includes it", "de": "Wird automatisch genutzt, wenn dein Plan es enthält" },
-      "xs": 12, "sm": 6, "md": 3, "lg": 3
+      "label": {
+        "en": "Variability band (min/max, paid plans)",
+        "de": "Schwankungsband (min/max, Bezahlpläne)"
+      },
+      "help": {
+        "en": "Used automatically if your plan includes it",
+        "de": "Wird automatisch genutzt, wenn dein Plan es enthält"
+      },
+      "xs": 12,
+      "sm": 6,
+      "md": 3,
+      "lg": 3
     },
     "_divider": {
       "type": "divider",
@@ -77,17 +137,40 @@
     "_pvnode": {
       "type": "staticLink",
       "href": "https://pvnode.com/",
-      "text": { "en": "pvnode.com", "de": "pvnode.com" },
+      "text": {
+        "en": "pvnode.com",
+        "de": "pvnode.com"
+      },
       "newLine": true,
-      "style": { "fontSize": "0.85em", "opacity": 0.7, "display": "inline-block", "marginTop": 30 },
-      "xs": 6, "sm": 6, "md": 6, "lg": 6
+      "style": {
+        "fontSize": "0.85em",
+        "opacity": 0.7,
+        "display": "inline-block",
+        "marginTop": 30
+      },
+      "xs": 6,
+      "sm": 6,
+      "md": 6,
+      "lg": 6
     },
     "_donate": {
       "type": "staticImage",
       "src": "coffee.png",
       "href": "https://buymeacoffee.com/alpi_brv",
-      "style": { "width": 200, "height": 50, "display": "block", "marginLeft": "auto", "marginTop": 16, "marginRight": 16, "marginBottom": 16, "cursor": "pointer" },
-      "xs": 6, "sm": 6, "md": 6, "lg": 6
+      "style": {
+        "width": 200,
+        "height": 50,
+        "display": "block",
+        "marginLeft": "auto",
+        "marginTop": 16,
+        "marginRight": 16,
+        "marginBottom": 16,
+        "cursor": "pointer"
+      },
+      "xs": 6,
+      "sm": 6,
+      "md": 6,
+      "lg": 6
     }
   }
 }
