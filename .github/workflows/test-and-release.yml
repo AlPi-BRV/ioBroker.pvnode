@@ -4,10 +4,18 @@ on:
   push:
     branches:
       - "main"
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - ".github/dependabot.yml"
+      - ".github/FUNDING.yml"
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
       - "v[0-9]+.[0-9]+.[0-9]+-**"
-  pull_request: {}
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
 
 concurrency:
   group: ${{ github.ref }}
@@ -30,7 +38,8 @@ jobs:
     strategy:
       matrix:
         node-version: [22.x, 24.x]
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        # Linux only to keep GitHub Actions costs low (macOS = 10x, Windows = 2x minutes)
+        os: [ubuntu-latest]
     steps:
       - uses: ioBroker/testing-action-adapter@v1
         with:
