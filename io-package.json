@@ -5,24 +5,69 @@
     "news": {
       "0.1.2": {
         "en": "Coffee cup button in settings",
-        "de": "Kaffeebecher-Button in den Einstellungen"
+        "de": "Kaffeebecher-Button in den Einstellungen",
+        "ru": "Кнопка с чашкой кофе в настройках",
+        "pt": "Botão de chávena de café nas configurações",
+        "nl": "Koffiekop-knop in de instellingen",
+        "fr": "Bouton tasse de café dans les paramètres",
+        "it": "Pulsante tazza di caffè nelle impostazioni",
+        "es": "Botón de taza de café en la configuración",
+        "pl": "Przycisk z filiżanką kawy w ustawieniach",
+        "uk": "Кнопка з чашкою кави в налаштуваннях",
+        "zh-cn": "设置中的咖啡杯按钮"
       },
       "0.1.1": {
         "en": "Smaller donation link in settings, Buy me a coffee link added",
-        "de": "Dezenterer Spenden-Link in den Einstellungen, Buy-me-a-coffee-Link eingetragen"
+        "de": "Dezenterer Spenden-Link in den Einstellungen, Buy-me-a-coffee-Link eingetragen",
+        "ru": "Более скромная ссылка для пожертвований в настройках, добавлена ссылка Buy me a coffee",
+        "pt": "Link de doação mais discreto nas configurações, link Buy me a coffee adicionado",
+        "nl": "Kleinere donatielink in de instellingen, Buy me a coffee-link toegevoegd",
+        "fr": "Lien de don plus discret dans les paramètres, lien Buy me a coffee ajouté",
+        "it": "Link per donazioni più discreto nelle impostazioni, aggiunto link Buy me a coffee",
+        "es": "Enlace de donación más discreto en la configuración, enlace Buy me a coffee añadido",
+        "pl": "Mniej widoczny link do darowizn w ustawieniach, dodano link Buy me a coffee",
+        "uk": "Менш помітне посилання для пожертв у налаштуваннях, додано посилання Buy me a coffee",
+        "zh-cn": "设置中的捐赠链接更低调，已添加 Buy me a coffee 链接"
       },
       "0.1.0": {
         "en": "Initial release: pvnode API v2, all plans (Free, Light, Plus), polling based on next_poll_at",
-        "de": "Erste Version: pvnode API v2, alle Pläne (Kostenlos, Light, Plus), Abfrage nach next_poll_at"
+        "de": "Erste Version: pvnode API v2, alle Pläne (Kostenlos, Light, Plus), Abfrage nach next_poll_at",
+        "ru": "Первый выпуск: pvnode API v2, все тарифы (Free, Light, Plus), опрос по next_poll_at",
+        "pt": "Versão inicial: pvnode API v2, todos os planos (Free, Light, Plus), consulta baseada em next_poll_at",
+        "nl": "Eerste versie: pvnode API v2, alle abonnementen (Free, Light, Plus), polling op basis van next_poll_at",
+        "fr": "Première version : pvnode API v2, toutes les offres (Free, Light, Plus), interrogation selon next_poll_at",
+        "it": "Prima versione: pvnode API v2, tutti i piani (Free, Light, Plus), interrogazione basata su next_poll_at",
+        "es": "Versión inicial: pvnode API v2, todos los planes (Free, Light, Plus), consulta basada en next_poll_at",
+        "pl": "Pierwsza wersja: pvnode API v2, wszystkie plany (Free, Light, Plus), odpytywanie według next_poll_at",
+        "uk": "Перший випуск: pvnode API v2, усі тарифи (Free, Light, Plus), опитування за next_poll_at",
+        "zh-cn": "首个版本：pvnode API v2，支持所有套餐（Free、Light、Plus），按 next_poll_at 轮询"
       }
     },
     "titleLang": {
       "en": "pvnode PV forecast",
-      "de": "pvnode PV-Prognose"
+      "de": "pvnode PV-Prognose",
+      "ru": "Прогноз PV pvnode",
+      "pt": "Previsão FV pvnode",
+      "nl": "pvnode PV-voorspelling",
+      "fr": "Prévision PV pvnode",
+      "it": "Previsione FV pvnode",
+      "es": "Previsión FV pvnode",
+      "pl": "Prognoza PV pvnode",
+      "uk": "Прогноз PV pvnode",
+      "zh-cn": "pvnode 光伏预测"
     },
     "desc": {
       "en": "PV production forecast from pvnode.com (API v2) with per-string values, remaining energy and chart data",
-      "de": "PV-Ertragsprognose von pvnode.com (API v2) mit Werten pro String, Restertrag und Diagrammdaten"
+      "de": "PV-Ertragsprognose von pvnode.com (API v2) mit Werten pro String, Restertrag und Diagrammdaten",
+      "ru": "Прогноз выработки PV от pvnode.com (API v2) со значениями по стрингам, оставшейся энергией и данными для графиков",
+      "pt": "Previsão de produção FV do pvnode.com (API v2) com valores por string, energia restante e dados para gráficos",
+      "nl": "PV-opbrengstvoorspelling van pvnode.com (API v2) met waarden per string, resterende energie en grafiekgegevens",
+      "fr": "Prévision de production PV de pvnode.com (API v2) avec valeurs par chaîne, énergie restante et données de graphique",
+      "it": "Previsione di produzione FV da pvnode.com (API v2) con valori per stringa, energia residua e dati per grafici",
+      "es": "Previsión de producción FV de pvnode.com (API v2) con valores por string, energía restante y datos para gráficos",
+      "pl": "Prognoza produkcji PV z pvnode.com (API v2) z wartościami dla stringów, pozostałą energią i danymi do wykresów",
+      "uk": "Прогноз виробітку PV від pvnode.com (API v2) зі значеннями за стрингами, залишковою енергією та даними для графіків",
+      "zh-cn": "来自 pvnode.com (API v2) 的光伏发电预测，包含各组串数值、剩余发电量和图表数据"
     },
     "authors": [
       "AlPi-BRV"
