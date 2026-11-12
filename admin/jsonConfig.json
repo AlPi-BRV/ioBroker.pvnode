@@ -84,7 +84,7 @@
     },
     "_donate": {
       "type": "staticLink",
-      "href": "https://www.buymeacoffee.com/DEIN-NAME",
+      "href": "https://buymeacoffee.com/alpi_brv",
       "text": { "en": "☕ Buy me a coffee", "de": "☕ Spendier mir einen Kaffee" },
       "style": { "fontSize": "0.85em", "opacity": 0.7, "textAlign": "right", "display": "block" },
       "xs": 6, "sm": 6, "md": 6, "lg": 6

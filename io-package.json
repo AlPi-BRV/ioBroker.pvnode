@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "pvnode",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "news": {
+      "0.1.1": {
+        "en": "Smaller donation link in settings, Buy me a coffee link added",
+        "de": "Dezenterer Spenden-Link in den Einstellungen, Buy-me-a-coffee-Link eingetragen"
+      },
       "0.1.0": {
         "en": "Initial release: pvnode API v2, all plans (Free, Light, Plus), polling based on next_poll_at",
         "de": "Erste Version: pvnode API v2, alle Pläne (Kostenlos, Light, Plus), Abfrage nach next_poll_at"
@@ -16,8 +20,17 @@
       "en": "PV production forecast from pvnode.com (API v2) with per-string values, remaining energy and chart data",
       "de": "PV-Ertragsprognose von pvnode.com (API v2) mit Werten pro String, Restertrag und Diagrammdaten"
     },
-    "authors": ["AlPi-BRV"],
-    "keywords": ["pvnode", "pv", "solar", "forecast", "prognose", "photovoltaik"],
+    "authors": [
+      "AlPi-BRV"
+    ],
+    "keywords": [
+      "pvnode",
+      "pv",
+      "solar",
+      "forecast",
+      "prognose",
+      "photovoltaik"
+    ],
     "licenseInformation": {
       "type": "free",
       "license": "MIT"
@@ -58,8 +71,12 @@
     "includeClearsky": false,
     "useVariability": true
   },
-  "encryptedNative": ["apiKey"],
-  "protectedNative": ["apiKey"],
+  "encryptedNative": [
+    "apiKey"
+  ],
+  "protectedNative": [
+    "apiKey"
+  ],
   "objects": [],
   "instanceObjects": [
     {

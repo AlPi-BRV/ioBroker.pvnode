@@ -32,4 +32,4 @@ PV-Ertragsprognose von [pvnode.com](https://pvnode.com) für ioBroker.
 
 ## Unterstützung
 
-Wenn dir der Adapter hilft: [☕ Spendier mir einen Kaffee](https://www.buymeacoffee.com/DEIN-NAME)
+Wenn dir der Adapter hilft: [☕ Spendier mir einen Kaffee](https://buymeacoffee.com/alpi_brv)

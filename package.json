@@ -1,6 +1,6 @@
 {
   "name": "iobroker.pvnode",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "PV production forecast from pvnode.com (API v2) for ioBroker",
   "author": {
     "name": "AlPi-BRV"
@@ -25,7 +25,7 @@
   },
   "funding": {
     "type": "individual",
-    "url": "https://www.buymeacoffee.com/DEIN-NAME"
+    "url": "https://buymeacoffee.com/alpi_brv"
   },
   "engines": {
     "node": ">=20"

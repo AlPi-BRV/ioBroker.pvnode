@@ -4,7 +4,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.pvnode.svg)](https://www.npmjs.com/package/iobroker.pvnode)
 [![License](https://img.shields.io/github/license/AlPi-BRV/ioBroker.pvnode)](LICENSE)
-[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-yellow)](https://www.buymeacoffee.com/DEIN-NAME)
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-yellow)](https://buymeacoffee.com/alpi_brv)
 
 **PV production forecast from [pvnode.com](https://pvnode.com) (API v2) for ioBroker.**
 
@@ -67,6 +67,11 @@ This adapter is not affiliated with pvnode. pvnode is a trademark of its owner.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### 0.1.1 (2026-11-12)
+
+- Smaller donation link in the settings
+- Buy me a coffee link added
 
 ### 0.1.0 (2026-11-12)
 
