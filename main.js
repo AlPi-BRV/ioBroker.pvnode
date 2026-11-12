@@ -672,8 +672,26 @@ class Pvnode extends utils.Adapter {
         const strings = Array.isArray(site.strings) ? site.strings : [];
         const total = strings.reduce((a, s) => a + (Number(s.power_kw) || 0), 0);
         await this.setStateAsync('site.power_kw', Math.round(total * 100) / 100, true);
-        const dirDe = { N: 'Nord', NO: 'Nordost', O: 'Ost', SO: 'Südost', S: 'Süd', SW: 'Südwest', W: 'West', NW: 'Nordwest' };
-        const dirEn = { N: 'North', NO: 'Northeast', O: 'East', SO: 'Southeast', S: 'South', SW: 'Southwest', W: 'West', NW: 'Northwest' };
+        const dirDe = {
+            N: 'Nord',
+            NO: 'Nordost',
+            O: 'Ost',
+            SO: 'Südost',
+            S: 'Süd',
+            SW: 'Südwest',
+            W: 'West',
+            NW: 'Nordwest',
+        };
+        const dirEn = {
+            N: 'North',
+            NO: 'Northeast',
+            O: 'East',
+            SO: 'Southeast',
+            S: 'South',
+            SW: 'Southwest',
+            W: 'West',
+            NW: 'Northwest',
+        };
         this.stringNames = strings.map(st => {
             const c = compass(st.orientation);
             return `${(this.lang === 'de' ? dirDe : dirEn)[c] || c} ${Number(st.power_kw).toLocaleString(this.lang === 'de' ? 'de-DE' : 'en-US')} kWp`;
