@@ -30,6 +30,16 @@ PV-Ertragsprognose von [pvnode.com](https://pvnode.com) für ioBroker.
 | `info.requestsRemaining` | Restliche Anfragen in diesem Monat |
 | `control.refresh` | Sofort neu abfragen (kostet eine Anfrage) |
 
+## Wie kam es zu diesem Adapter?
+
+Mit bestehenden Lösungen haben wir die pvnode-Prognose nicht zuverlässig in ioBroker bekommen – bei uns kamen nur leere Werte an. Deshalb haben wir uns entschlossen, einen einfachen, unkomplizierten Adapter herauszubringen, der genau eine Sache macht: die pvnode-Prognose nach ioBroker holen, mit möglichst wenig Einstellungen und Anfragen.
+
+## Hinweis und Dank
+
+Dieser Adapter ist ein unabhängiges Community-Projekt. Wir stehen **in keiner Verbindung zu pvnode**, und pvnode leistet für diesen Adapter keinen Support. pvnode ist eine Marke ihres Inhabers.
+
+Vielen Dank an das pvnode-Team für ihren Dienst und die offene API, die diesen Adapter erst möglich macht.
+
 ## Unterstützung
 
 Wenn dir der Adapter hilft: [☕ Spendier mir einen Kaffee](https://buymeacoffee.com/alpi_brv)

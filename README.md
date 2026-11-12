@@ -59,9 +59,15 @@
 
 The adapter follows `next_poll_at`, so on the Free plan it needs about one request per day.
 
-## Disclaimer
+## Why this adapter?
 
-This adapter is not affiliated with pvnode. pvnode is a trademark of its owner.
+We had trouble getting pvnode forecasts into ioBroker reliably with existing solutions – in our setup we only got empty values. So we decided to build a simple, uncomplicated adapter that does exactly one thing: bring the pvnode forecast into ioBroker, with as few settings and requests as possible.
+
+## Disclaimer and thanks
+
+This adapter is an independent community project. We are **not affiliated with pvnode** in any way, and pvnode does not provide support for this adapter. pvnode is a trademark of its owner.
+
+Many thanks to the pvnode team for providing their service and the public API that makes this adapter possible.
 
 ## Changelog
 
