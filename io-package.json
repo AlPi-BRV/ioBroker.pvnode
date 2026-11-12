@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pvnode",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "news": {
+      "0.1.3": {
+        "en": "Much lower memory and CPU usage (date formatters are cached)",
+        "de": "Deutlich weniger Speicher- und CPU-Verbrauch (Datumsformate werden zwischengespeichert)",
+        "ru": "Значительно меньшее потребление памяти и CPU (кэширование форматов даты)",
+        "pt": "Uso de memória e CPU muito menor (formatadores de data em cache)",
+        "nl": "Veel lager geheugen- en CPU-gebruik (datumformatters worden gecachet)",
+        "fr": "Consommation mémoire et CPU nettement réduite (formateurs de date mis en cache)",
+        "it": "Uso di memoria e CPU molto inferiore (formattatori di data in cache)",
+        "es": "Uso de memoria y CPU mucho menor (formateadores de fecha en caché)",
+        "pl": "Znacznie mniejsze zużycie pamięci i CPU (buforowanie formaterów dat)",
+        "uk": "Значно менше споживання пам'яті та CPU (кешування форматів дати)",
+        "zh-cn": "内存和 CPU 占用大幅降低（缓存日期格式化器）"
+      },
       "0.1.2": {
         "en": "Coffee cup button in settings",
         "de": "Kaffeebecher-Button in den Einstellungen",

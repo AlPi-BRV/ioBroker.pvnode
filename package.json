@@ -1,6 +1,6 @@
 {
   "name": "iobroker.pvnode",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "PV production forecast from pvnode.com (API v2) for ioBroker",
   "author": {
     "name": "AlPi-BRV"

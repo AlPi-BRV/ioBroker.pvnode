@@ -76,6 +76,10 @@ Many thanks to the pvnode team for providing their service and the public API th
     ### **WORK IN PROGRESS**
 -->
 
+### 0.1.3 (2026-11-12)
+
+- Much lower memory and CPU usage (date formatters are cached)
+
 ### 0.1.2 (2026-11-12)
 
 - Coffee cup button in the settings
