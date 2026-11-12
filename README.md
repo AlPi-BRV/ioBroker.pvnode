@@ -6,6 +6,8 @@
 [![License](https://img.shields.io/github/license/AlPi-BRV/ioBroker.pvnode)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-yellow)](https://buymeacoffee.com/alpi_brv)
 
+<a href="https://buymeacoffee.com/alpi_brv"><img src="admin/coffee.png" alt="Buy me a coffee" width="200"></a>
+
 **PV production forecast from [pvnode.com](https://pvnode.com) (API v2) for ioBroker.**
 
 🇩🇪 [Deutsche Anleitung](docs/de/README.md)
@@ -67,6 +69,10 @@ This adapter is not affiliated with pvnode. pvnode is a trademark of its owner.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### 0.1.2 (2026-11-12)
+
+- Coffee cup button in the settings
 
 ### 0.1.1 (2026-11-12)
 

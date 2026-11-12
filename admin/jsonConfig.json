@@ -79,14 +79,14 @@
       "href": "https://pvnode.com/",
       "text": { "en": "pvnode.com", "de": "pvnode.com" },
       "newLine": true,
-      "style": { "fontSize": "0.85em", "opacity": 0.7 },
+      "style": { "fontSize": "0.85em", "opacity": 0.7, "display": "inline-block", "marginTop": 30 },
       "xs": 6, "sm": 6, "md": 6, "lg": 6
     },
     "_donate": {
-      "type": "staticLink",
+      "type": "staticImage",
+      "src": "coffee.png",
       "href": "https://buymeacoffee.com/alpi_brv",
-      "text": { "en": "☕ Buy me a coffee", "de": "☕ Spendier mir einen Kaffee" },
-      "style": { "fontSize": "0.85em", "opacity": 0.7, "textAlign": "right", "display": "block" },
+      "style": { "width": 200, "height": 50, "display": "block", "marginLeft": "auto", "marginTop": 16, "marginRight": 16, "marginBottom": 16, "cursor": "pointer" },
       "xs": 6, "sm": 6, "md": 6, "lg": 6
     }
   }

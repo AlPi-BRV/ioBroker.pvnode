@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "pvnode",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "news": {
+      "0.1.2": {
+        "en": "Coffee cup button in settings",
+        "de": "Kaffeebecher-Button in den Einstellungen"
+      },
       "0.1.1": {
         "en": "Smaller donation link in settings, Buy me a coffee link added",
         "de": "Dezenterer Spenden-Link in den Einstellungen, Buy-me-a-coffee-Link eingetragen"
