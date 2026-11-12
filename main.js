@@ -60,7 +60,7 @@ class Pvnode extends utils.Adapter {
     }
 
     get userAgent() {
-        const v = (this.pack && this.pack.version) || (this.version) || '0.0.0';
+        const v = (this.pack && this.pack.version) || this.version || '0.0.0';
         return `ioBroker.pvnode/${v} ioBroker/js-controller`;
     }
 
@@ -235,7 +235,9 @@ class Pvnode extends utils.Adapter {
                         if (dropped.length) {
                             if (dropped.includes('variability')) {
                                 this.variabilityAllowed = false;
-                                this.log.info('Variability band is not part of your pvnode plan, continuing without it');
+                                this.log.info(
+                                    'Variability band is not part of your pvnode plan, continuing without it',
+                                );
                             } else {
                                 this.log.info(`Plan does not allow ${dropped.join(', ')}, continuing without`);
                                 this.available = (this.available || []).filter(g => !dropped.includes(g));
@@ -283,7 +285,9 @@ class Pvnode extends utils.Adapter {
 
         if (status === 401) {
             await this.setStateAsync('info.connection', false, true);
-            this.log.error('pvnode API key is invalid or revoked. Please enter a new key in the settings. Polling stopped.');
+            this.log.error(
+                'pvnode API key is invalid or revoked. Please enter a new key in the settings. Polling stopped.',
+            );
             return;
         }
         if (status === 404) {
@@ -372,9 +376,21 @@ class Pvnode extends utils.Adapter {
         // charts are only rebuilt when a new payload arrives
         const now = Date.now();
         const today = localDate(now, tz);
-        await this.ensureState('json.forecast', { type: 'string', role: 'json', name: { en: 'Full forecast series', de: 'Komplette Prognosekurve' } });
-        await this.ensureState('json.today', { type: 'string', role: 'json', name: { en: 'Forecast series today', de: 'Prognosekurve heute' } });
-        await this.ensureState('json.daily', { type: 'string', role: 'json', name: { en: 'Daily forecast', de: 'Tagesprognose' } });
+        await this.ensureState('json.forecast', {
+            type: 'string',
+            role: 'json',
+            name: { en: 'Full forecast series', de: 'Komplette Prognosekurve' },
+        });
+        await this.ensureState('json.today', {
+            type: 'string',
+            role: 'json',
+            name: { en: 'Forecast series today', de: 'Prognosekurve heute' },
+        });
+        await this.ensureState('json.daily', {
+            type: 'string',
+            role: 'json',
+            name: { en: 'Daily forecast', de: 'Tagesprognose' },
+        });
         await this.setStateAsync('json.forecast', JSON.stringify(chartSeries(this.prepared)), true);
         await this.setStateAsync(
             'json.today',
@@ -426,23 +442,79 @@ class Pvnode extends utils.Adapter {
             await this.setObjectNotExistsAsync(ch, { type: 'channel', common: { name }, native: {} });
         }
         const info = {
-            'info.connection': { type: 'boolean', role: 'indicator.connected', name: { en: 'Connected to pvnode', de: 'Verbunden mit pvnode' } },
-            'info.stale': { type: 'boolean', role: 'indicator', name: { en: 'Forecast is outdated (last request failed)', de: 'Prognose veraltet (letzte Abfrage fehlgeschlagen)' } },
+            'info.connection': {
+                type: 'boolean',
+                role: 'indicator.connected',
+                name: { en: 'Connected to pvnode', de: 'Verbunden mit pvnode' },
+            },
+            'info.stale': {
+                type: 'boolean',
+                role: 'indicator',
+                name: {
+                    en: 'Forecast is outdated (last request failed)',
+                    de: 'Prognose veraltet (letzte Abfrage fehlgeschlagen)',
+                },
+            },
             'info.lastError': { type: 'string', role: 'text', name: { en: 'Last error', de: 'Letzter Fehler' } },
-            'info.lastUpdate': { type: 'string', role: 'date', name: { en: 'Last successful request', de: 'Letzte erfolgreiche Abfrage' } },
-            'info.computedAt': { type: 'string', role: 'text', name: { en: 'Forecast computed at (pvnode)', de: 'Prognose berechnet um (pvnode)' } },
+            'info.lastUpdate': {
+                type: 'string',
+                role: 'date',
+                name: { en: 'Last successful request', de: 'Letzte erfolgreiche Abfrage' },
+            },
+            'info.computedAt': {
+                type: 'string',
+                role: 'text',
+                name: { en: 'Forecast computed at (pvnode)', de: 'Prognose berechnet um (pvnode)' },
+            },
             'info.nextPoll': { type: 'string', role: 'date', name: { en: 'Next request', de: 'Nächste Abfrage' } },
-            'info.requestsLimit': { type: 'mixed', role: 'value', name: { en: 'Monthly request limit', de: 'Monatliches Anfragelimit' } },
-            'info.requestsUsed': { type: 'number', role: 'value', name: { en: 'Requests used this month', de: 'Anfragen diesen Monat verbraucht' } },
-            'info.requestsRemaining': { type: 'mixed', role: 'value', name: { en: 'Requests remaining this month', de: 'Verbleibende Anfragen diesen Monat' } },
-            'info.requestsReset': { type: 'string', role: 'date', name: { en: 'Request counter reset', de: 'Zurücksetzung des Anfragezählers' } },
-            'info.availableGroups': { type: 'string', role: 'text', name: { en: 'Data groups allowed by plan', de: 'Vom Plan erlaubte Datengruppen' } },
-            'info.variability': { type: 'boolean', role: 'indicator', name: { en: 'Variability band available', de: 'Schwankungsband verfügbar' } },
-            'info.forecastDays': { type: 'number', role: 'value', name: { en: 'Number of forecast days', de: 'Anzahl Prognosetage' } },
-            'info.cache': { type: 'string', role: 'json', name: { en: 'Cached forecast (internal)', de: 'Zwischengespeicherte Prognose (intern)' } },
+            'info.requestsLimit': {
+                type: 'mixed',
+                role: 'value',
+                name: { en: 'Monthly request limit', de: 'Monatliches Anfragelimit' },
+            },
+            'info.requestsUsed': {
+                type: 'number',
+                role: 'value',
+                name: { en: 'Requests used this month', de: 'Anfragen diesen Monat verbraucht' },
+            },
+            'info.requestsRemaining': {
+                type: 'mixed',
+                role: 'value',
+                name: { en: 'Requests remaining this month', de: 'Verbleibende Anfragen diesen Monat' },
+            },
+            'info.requestsReset': {
+                type: 'string',
+                role: 'date',
+                name: { en: 'Request counter reset', de: 'Zurücksetzung des Anfragezählers' },
+            },
+            'info.availableGroups': {
+                type: 'string',
+                role: 'text',
+                name: { en: 'Data groups allowed by plan', de: 'Vom Plan erlaubte Datengruppen' },
+            },
+            'info.variability': {
+                type: 'boolean',
+                role: 'indicator',
+                name: { en: 'Variability band available', de: 'Schwankungsband verfügbar' },
+            },
+            'info.forecastDays': {
+                type: 'number',
+                role: 'value',
+                name: { en: 'Number of forecast days', de: 'Anzahl Prognosetage' },
+            },
+            'info.cache': {
+                type: 'string',
+                role: 'json',
+                name: { en: 'Cached forecast (internal)', de: 'Zwischengespeicherte Prognose (intern)' },
+            },
             'site.name': { type: 'string', role: 'text', name: { en: 'Site name', de: 'Name des Standorts' } },
             'site.id': { type: 'string', role: 'text', name: { en: 'Site ID', de: 'Standort-ID' } },
-            'site.power_kw': { type: 'number', role: 'value', unit: 'kWp', name: { en: 'Installed power', de: 'Installierte Leistung' } },
+            'site.power_kw': {
+                type: 'number',
+                role: 'value',
+                unit: 'kWp',
+                name: { en: 'Installed power', de: 'Installierte Leistung' },
+            },
         };
         for (const [id, c] of Object.entries(info)) {
             await this.ensureState(id, c);
@@ -450,7 +522,10 @@ class Pvnode extends utils.Adapter {
         await this.setObjectNotExistsAsync('control.refresh', {
             type: 'state',
             common: {
-                name: { en: 'Refresh forecast now (costs one request)', de: 'Prognose jetzt abrufen (kostet eine Anfrage)' },
+                name: {
+                    en: 'Refresh forecast now (costs one request)',
+                    de: 'Prognose jetzt abrufen (kostet eine Anfrage)',
+                },
                 type: 'boolean',
                 role: 'button',
                 read: false,
@@ -521,7 +596,14 @@ class Pvnode extends utils.Adapter {
     async cleanupOptionalWeather() {
         const wanted = new Set();
         if (this.config.includeWeather) {
-            ['temp', 'weather_code', 'wind_speed', 'relative_humidity', 'precipitation_mm', 'snow_water_equivalent'].forEach(f => wanted.add(f));
+            [
+                'temp',
+                'weather_code',
+                'wind_speed',
+                'relative_humidity',
+                'precipitation_mm',
+                'snow_water_equivalent',
+            ].forEach(f => wanted.add(f));
         }
         if (this.config.includeIrradiance) {
             ['ghi', 'dhi', 'bni'].forEach(f => wanted.add(f));
