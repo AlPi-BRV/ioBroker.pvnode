@@ -1,21 +1,13 @@
 name: Test and Release
 
+# Runs only on release tags or when started manually (Actions tab -> Run workflow),
+# to save GitHub Actions minutes during development.
 on:
   push:
-    branches:
-      - "main"
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
-      - ".github/dependabot.yml"
-      - ".github/FUNDING.yml"
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
       - "v[0-9]+.[0-9]+.[0-9]+-**"
-  pull_request:
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
+  workflow_dispatch: {}
 
 concurrency:
   group: ${{ github.ref }}
