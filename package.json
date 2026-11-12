@@ -1,0 +1,47 @@
+{
+  "name": "iobroker.pvnode",
+  "version": "0.1.0",
+  "description": "PV production forecast from pvnode.com (API v2) for ioBroker",
+  "author": {
+    "name": "AlPi-BRV"
+  },
+  "homepage": "https://github.com/AlPi-BRV/ioBroker.pvnode",
+  "license": "MIT",
+  "keywords": [
+    "ioBroker",
+    "pvnode",
+    "pv",
+    "photovoltaic",
+    "solar",
+    "forecast",
+    "prognose"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlPi-BRV/ioBroker.pvnode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlPi-BRV/ioBroker.pvnode/issues"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://www.buymeacoffee.com/DEIN-NAME"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@iobroker/adapter-core": "^3.2.3"
+  },
+  "main": "main.js",
+  "files": [
+    "admin/",
+    "lib/",
+    "main.js",
+    "io-package.json",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

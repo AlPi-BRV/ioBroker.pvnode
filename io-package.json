@@ -1,0 +1,93 @@
+{
+  "common": {
+    "name": "pvnode",
+    "version": "0.1.0",
+    "news": {
+      "0.1.0": {
+        "en": "Initial release: pvnode API v2, all plans (Free, Light, Plus), polling based on next_poll_at",
+        "de": "Erste Version: pvnode API v2, alle Pläne (Kostenlos, Light, Plus), Abfrage nach next_poll_at"
+      }
+    },
+    "titleLang": {
+      "en": "pvnode PV forecast",
+      "de": "pvnode PV-Prognose"
+    },
+    "desc": {
+      "en": "PV production forecast from pvnode.com (API v2) with per-string values, remaining energy and chart data",
+      "de": "PV-Ertragsprognose von pvnode.com (API v2) mit Werten pro String, Restertrag und Diagrammdaten"
+    },
+    "authors": ["AlPi-BRV"],
+    "keywords": ["pvnode", "pv", "solar", "forecast", "prognose", "photovoltaik"],
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    },
+    "platform": "Javascript/Node.js",
+    "icon": "pvnode.png",
+    "extIcon": "https://raw.githubusercontent.com/AlPi-BRV/ioBroker.pvnode/main/admin/pvnode.png",
+    "readme": "https://github.com/AlPi-BRV/ioBroker.pvnode/blob/main/README.md",
+    "enabled": true,
+    "loglevel": "info",
+    "tier": 3,
+    "mode": "daemon",
+    "type": "energy",
+    "compact": true,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "adminUI": {
+      "config": "json"
+    },
+    "messagebox": true,
+    "dependencies": [
+      {
+        "js-controller": ">=6.0.11"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=7.0.23"
+      }
+    ]
+  },
+  "native": {
+    "apiKey": "",
+    "siteId": "",
+    "forecastDays": 0,
+    "includeWeather": true,
+    "includeIrradiance": false,
+    "includeClearsky": false,
+    "useVariability": true
+  },
+  "encryptedNative": ["apiKey"],
+  "protectedNative": ["apiKey"],
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": {
+        "name": {
+          "en": "Information",
+          "de": "Information"
+        }
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": {
+          "en": "Connected to pvnode",
+          "de": "Verbunden mit pvnode"
+        },
+        "type": "boolean",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    }
+  ]
+}
