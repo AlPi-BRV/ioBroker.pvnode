@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pvnode",
-    "version": "0.1.4",
+    "version": "0.2.0",
     "news": {
+      "0.2.0": {
+        "en": "First public release: pvnode API v2 for all plans (Free, Light, Plus), per-string values, remaining energy, ready-made SVG charts for VIS",
+        "de": "Erste öffentliche Version: pvnode API v2 für alle Pläne (Kostenlos, Light, Plus), Werte pro String, Restertrag, fertige SVG-Diagramme für VIS",
+        "ru": "Первый публичный выпуск: pvnode API v2 для всех тарифов (Free, Light, Plus), значения по стрингам, оставшаяся энергия, готовые SVG-графики для VIS",
+        "pt": "Primeira versão pública: pvnode API v2 para todos os planos (Free, Light, Plus), valores por string, energia restante, gráficos SVG prontos para VIS",
+        "nl": "Eerste publieke versie: pvnode API v2 voor alle abonnementen (Free, Light, Plus), waarden per string, resterende energie, kant-en-klare SVG-grafieken voor VIS",
+        "fr": "Première version publique : pvnode API v2 pour toutes les offres (Free, Light, Plus), valeurs par chaîne, énergie restante, graphiques SVG prêts pour VIS",
+        "it": "Prima versione pubblica: pvnode API v2 per tutti i piani (Free, Light, Plus), valori per stringa, energia residua, grafici SVG pronti per VIS",
+        "es": "Primera versión pública: pvnode API v2 para todos los planes (Free, Light, Plus), valores por string, energía restante, gráficos SVG listos para VIS",
+        "pl": "Pierwsza publiczna wersja: pvnode API v2 dla wszystkich planów (Free, Light, Plus), wartości dla stringów, pozostała energia, gotowe wykresy SVG dla VIS",
+        "uk": "Перший публічний випуск: pvnode API v2 для всіх тарифів (Free, Light, Plus), значення за стрингами, залишкова енергія, готові SVG-графіки для VIS",
+        "zh-cn": "首个公开版本：支持所有套餐（Free、Light、Plus）的 pvnode API v2，各组串数值、剩余发电量、适用于 VIS 的现成 SVG 图表"
+      },
       "0.1.4": {
         "en": "Ready-made SVG charts for VIS (html.today, html.tomorrow, html.days)",
         "de": "Fertige SVG-Diagramme für VIS (html.today, html.tomorrow, html.days)",

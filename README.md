@@ -78,6 +78,11 @@ Many thanks to the pvnode team for providing their service and the public API th
     ### **WORK IN PROGRESS**
 -->
 
+### 0.2.0 (2026-11-15)
+
+- First public release
+- Requires Node.js 22 or newer
+
 ### 0.1.4 (2026-11-12)
 
 - Ready-made SVG charts for VIS (`html.today`, `html.tomorrow`, `html.days`)
