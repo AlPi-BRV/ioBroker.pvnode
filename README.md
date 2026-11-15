@@ -78,6 +78,12 @@ Many thanks to the pvnode team for providing their service and the public API th
     ### **WORK IN PROGRESS**
 -->
 
+### 0.2.1 (2026-11-15)
+
+- Settings translated into all ioBroker languages
+- Publishing via npm trusted publishing (with provenance)
+- Tested with Node.js 22, 24 and 26
+
 ### 0.2.0 (2026-11-15)
 
 - First public release

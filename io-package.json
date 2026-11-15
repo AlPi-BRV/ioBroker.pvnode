@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pvnode",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "news": {
+      "0.2.1": {
+        "en": "Settings translated into all languages, publishing via npm trusted publishing, tested with Node.js 22, 24 and 26",
+        "de": "Einstellungen in alle Sprachen übersetzt, Veröffentlichung per npm Trusted Publishing, getestet mit Node.js 22, 24 und 26",
+        "ru": "Настройки переведены на все языки, публикация через npm trusted publishing, протестировано с Node.js 22, 24 и 26",
+        "pt": "Configurações traduzidas para todos os idiomas, publicação via npm trusted publishing, testado com Node.js 22, 24 e 26",
+        "nl": "Instellingen in alle talen vertaald, publicatie via npm trusted publishing, getest met Node.js 22, 24 en 26",
+        "fr": "Paramètres traduits dans toutes les langues, publication via npm trusted publishing, testé avec Node.js 22, 24 et 26",
+        "it": "Impostazioni tradotte in tutte le lingue, pubblicazione tramite npm trusted publishing, testato con Node.js 22, 24 e 26",
+        "es": "Configuración traducida a todos los idiomas, publicación mediante npm trusted publishing, probado con Node.js 22, 24 y 26",
+        "pl": "Ustawienia przetłumaczone na wszystkie języki, publikacja przez npm trusted publishing, testowane z Node.js 22, 24 i 26",
+        "uk": "Налаштування перекладено всіма мовами, публікація через npm trusted publishing, протестовано з Node.js 22, 24 і 26",
+        "zh-cn": "设置已翻译为所有语言，通过 npm trusted publishing 发布，已在 Node.js 22、24 和 26 上测试"
+      },
       "0.2.0": {
         "en": "First public release: pvnode API v2 for all plans (Free, Light, Plus), per-string values, remaining energy, ready-made SVG charts for VIS",
         "de": "Erste öffentliche Version: pvnode API v2 für alle Pläne (Kostenlos, Light, Plus), Werte pro String, Restertrag, fertige SVG-Diagramme für VIS",
