@@ -4,7 +4,7 @@
   "description": "PV production forecast from pvnode.com (API v2) for ioBroker",
   "author": {
     "name": "AlPi-BRV",
-    "email": "AlPi-BRV@users.noreply.github.com"
+    "email": "alex@1-5worlds.de"
   },
   "homepage": "https://github.com/AlPi-BRV/ioBroker.pvnode",
   "license": "MIT",

@@ -57,7 +57,7 @@
       "zh-cn": "来自 pvnode.com (API v2) 的光伏发电预测，包含各组串数值、剩余发电量和图表数据"
     },
     "authors": [
-      "AlPi-BRV <AlPi-BRV@users.noreply.github.com>"
+      "AlPi-BRV <alex@1-5worlds.de>"
     ],
     "keywords": [
       "pvnode",
@@ -94,7 +94,7 @@
     ],
     "globalDependencies": [
       {
-        "admin": ">=7.6.17"
+        "admin": ">=7.6.20"
       }
     ]
   },
