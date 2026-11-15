@@ -7,7 +7,16 @@
       "size": 3,
       "text": {
         "en": "pvnode access",
-        "de": "pvnode-Zugang"
+        "de": "pvnode-Zugang",
+        "ru": "Доступ к pvnode",
+        "pt": "Acesso ao pvnode",
+        "nl": "pvnode-toegang",
+        "fr": "Accès pvnode",
+        "it": "Accesso pvnode",
+        "es": "Acceso a pvnode",
+        "pl": "Dostęp do pvnode",
+        "uk": "Доступ до pvnode",
+        "zh-cn": "pvnode 访问"
       }
     },
     "apiKey": {
@@ -15,11 +24,29 @@
       "visible": true,
       "label": {
         "en": "API key",
-        "de": "API-Key"
+        "de": "API-Key",
+        "ru": "API-ключ",
+        "pt": "Chave de API",
+        "nl": "API-sleutel",
+        "fr": "Clé API",
+        "it": "Chiave API",
+        "es": "Clave de API",
+        "pl": "Klucz API",
+        "uk": "API-ключ",
+        "zh-cn": "API 密钥"
       },
       "help": {
         "en": "Starts with sk_live_ – create it at pvnode.com",
-        "de": "Beginnt mit sk_live_ – wird auf pvnode.com erzeugt"
+        "de": "Beginnt mit sk_live_ – wird auf pvnode.com erzeugt",
+        "ru": "Начинается с sk_live_ – создаётся на pvnode.com",
+        "pt": "Começa com sk_live_ – crie em pvnode.com",
+        "nl": "Begint met sk_live_ – aan te maken op pvnode.com",
+        "fr": "Commence par sk_live_ – à créer sur pvnode.com",
+        "it": "Inizia con sk_live_ – da creare su pvnode.com",
+        "es": "Empieza por sk_live_ – se crea en pvnode.com",
+        "pl": "Zaczyna się od sk_live_ – utwórz go na pvnode.com",
+        "uk": "Починається з sk_live_ – створюється на pvnode.com",
+        "zh-cn": "以 sk_live_ 开头 – 在 pvnode.com 创建"
       },
       "xs": 12,
       "sm": 12,
@@ -36,11 +63,29 @@
       "manual": true,
       "label": {
         "en": "Site",
-        "de": "Standort"
+        "de": "Standort",
+        "ru": "Объект",
+        "pt": "Local",
+        "nl": "Locatie",
+        "fr": "Site",
+        "it": "Sito",
+        "es": "Ubicación",
+        "pl": "Lokalizacja",
+        "uk": "Об'єкт",
+        "zh-cn": "站点"
       },
       "help": {
         "en": "Select your pvnode site (adapter instance must be running). Leave empty if you only have one site.",
-        "de": "pvnode-Standort auswählen (Instanz muss laufen). Leer lassen, wenn es nur einen Standort gibt."
+        "de": "pvnode-Standort auswählen (Instanz muss laufen). Leer lassen, wenn es nur einen Standort gibt.",
+        "ru": "Выберите объект pvnode (экземпляр должен быть запущен). Оставьте пустым, если объект один.",
+        "pt": "Selecione o local pvnode (a instância deve estar em execução). Deixe vazio se houver apenas um local.",
+        "nl": "Kies je pvnode-locatie (instantie moet draaien). Leeg laten als er maar één locatie is.",
+        "fr": "Sélectionnez votre site pvnode (l'instance doit être démarrée). Laissez vide s'il n'y a qu'un seul site.",
+        "it": "Seleziona il sito pvnode (l'istanza deve essere in esecuzione). Lascia vuoto se c'è un solo sito.",
+        "es": "Seleccione su ubicación pvnode (la instancia debe estar en ejecución). Déjelo vacío si solo hay una.",
+        "pl": "Wybierz lokalizację pvnode (instancja musi działać). Pozostaw puste, jeśli jest tylko jedna.",
+        "uk": "Виберіть об'єкт pvnode (екземпляр має працювати). Залиште порожнім, якщо об'єкт один.",
+        "zh-cn": "选择您的 pvnode 站点（实例必须正在运行）。如果只有一个站点，请留空。"
       },
       "xs": 12,
       "sm": 12,
@@ -52,7 +97,16 @@
       "size": 3,
       "text": {
         "en": "Data",
-        "de": "Daten"
+        "de": "Daten",
+        "ru": "Данные",
+        "pt": "Dados",
+        "nl": "Gegevens",
+        "fr": "Données",
+        "it": "Dati",
+        "es": "Datos",
+        "pl": "Dane",
+        "uk": "Дані",
+        "zh-cn": "数据"
       },
       "newLine": true
     },
@@ -60,7 +114,16 @@
       "type": "staticText",
       "text": {
         "en": "Your plan is detected automatically. The adapter only requests new data when pvnode has computed a new forecast (Free: 1×/day, Light: hourly, Plus: up to every 15 min) and shows the remaining monthly requests in info.requestsRemaining.",
-        "de": "Dein Plan wird automatisch erkannt. Der Adapter fragt nur ab, wenn pvnode eine neue Prognose berechnet hat (Kostenlos: 1×/Tag, Light: stündlich, Plus: bis alle 15 min), und zeigt die restlichen Monatsanfragen in info.requestsRemaining."
+        "de": "Dein Plan wird automatisch erkannt. Der Adapter fragt nur ab, wenn pvnode eine neue Prognose berechnet hat (Kostenlos: 1×/Tag, Light: stündlich, Plus: bis alle 15 min), und zeigt die restlichen Monatsanfragen in info.requestsRemaining.",
+        "ru": "Тариф определяется автоматически. Адаптер запрашивает данные только после расчёта нового прогноза pvnode (Free: 1×/день, Light: ежечасно, Plus: до каждых 15 мин) и показывает оставшиеся запросы в info.requestsRemaining.",
+        "pt": "O seu plano é detetado automaticamente. O adaptador só pede dados quando o pvnode calculou uma nova previsão (Free: 1×/dia, Light: de hora a hora, Plus: até a cada 15 min) e mostra os pedidos mensais restantes em info.requestsRemaining.",
+        "nl": "Je abonnement wordt automatisch herkend. De adapter vraagt alleen gegevens op als pvnode een nieuwe voorspelling heeft berekend (Free: 1×/dag, Light: elk uur, Plus: tot elke 15 min) en toont de resterende maandelijkse verzoeken in info.requestsRemaining.",
+        "fr": "Votre offre est détectée automatiquement. L'adaptateur ne demande des données que lorsque pvnode a calculé une nouvelle prévision (Free : 1×/jour, Light : toutes les heures, Plus : jusqu'à toutes les 15 min) et affiche les requêtes mensuelles restantes dans info.requestsRemaining.",
+        "it": "Il piano viene rilevato automaticamente. L'adattatore richiede dati solo quando pvnode ha calcolato una nuova previsione (Free: 1×/giorno, Light: ogni ora, Plus: fino a ogni 15 min) e mostra le richieste mensili residue in info.requestsRemaining.",
+        "es": "Su plan se detecta automáticamente. El adaptador solo solicita datos cuando pvnode ha calculado una nueva previsión (Free: 1×/día, Light: cada hora, Plus: hasta cada 15 min) y muestra las solicitudes mensuales restantes en info.requestsRemaining.",
+        "pl": "Plan jest wykrywany automatycznie. Adapter pobiera dane tylko wtedy, gdy pvnode obliczy nową prognozę (Free: 1×/dzień, Light: co godzinę, Plus: nawet co 15 min) i pokazuje pozostałe miesięczne zapytania w info.requestsRemaining.",
+        "uk": "Тариф визначається автоматично. Адаптер запитує дані лише після розрахунку нового прогнозу pvnode (Free: 1×/день, Light: щогодини, Plus: до кожних 15 хв) і показує залишок запитів у info.requestsRemaining.",
+        "zh-cn": "系统会自动识别您的套餐。适配器仅在 pvnode 计算出新预测后才请求数据（Free：每天 1 次，Light：每小时，Plus：最多每 15 分钟），并在 info.requestsRemaining 中显示本月剩余请求数。"
       },
       "xs": 12,
       "sm": 12,
@@ -73,7 +136,16 @@
       "max": 7,
       "label": {
         "en": "Forecast days (0 = plan maximum)",
-        "de": "Prognosetage (0 = Maximum des Plans)"
+        "de": "Prognosetage (0 = Maximum des Plans)",
+        "ru": "Дней прогноза (0 = максимум тарифа)",
+        "pt": "Dias de previsão (0 = máximo do plano)",
+        "nl": "Voorspellingsdagen (0 = maximum van abonnement)",
+        "fr": "Jours de prévision (0 = maximum de l'offre)",
+        "it": "Giorni di previsione (0 = massimo del piano)",
+        "es": "Días de previsión (0 = máximo del plan)",
+        "pl": "Dni prognozy (0 = maksimum planu)",
+        "uk": "Днів прогнозу (0 = максимум тарифу)",
+        "zh-cn": "预测天数（0 = 套餐上限）"
       },
       "newLine": true,
       "xs": 12,
@@ -85,7 +157,16 @@
       "type": "checkbox",
       "label": {
         "en": "Weather (temperature, wind, rain …)",
-        "de": "Wetter (Temperatur, Wind, Regen …)"
+        "de": "Wetter (Temperatur, Wind, Regen …)",
+        "ru": "Погода (температура, ветер, дождь …)",
+        "pt": "Meteorologia (temperatura, vento, chuva …)",
+        "nl": "Weer (temperatuur, wind, regen …)",
+        "fr": "Météo (température, vent, pluie …)",
+        "it": "Meteo (temperatura, vento, pioggia …)",
+        "es": "Tiempo (temperatura, viento, lluvia …)",
+        "pl": "Pogoda (temperatura, wiatr, deszcz …)",
+        "uk": "Погода (температура, вітер, дощ …)",
+        "zh-cn": "天气（温度、风、降雨 …）"
       },
       "newLine": true,
       "xs": 12,
@@ -97,7 +178,16 @@
       "type": "checkbox",
       "label": {
         "en": "Irradiance (GHI, DHI, BNI)",
-        "de": "Einstrahlung (GHI, DHI, BNI)"
+        "de": "Einstrahlung (GHI, DHI, BNI)",
+        "ru": "Инсоляция (GHI, DHI, BNI)",
+        "pt": "Irradiância (GHI, DHI, BNI)",
+        "nl": "Instraling (GHI, DHI, BNI)",
+        "fr": "Irradiance (GHI, DHI, BNI)",
+        "it": "Irraggiamento (GHI, DHI, BNI)",
+        "es": "Irradiancia (GHI, DHI, BNI)",
+        "pl": "Napromieniowanie (GHI, DHI, BNI)",
+        "uk": "Інсоляція (GHI, DHI, BNI)",
+        "zh-cn": "辐照度（GHI、DHI、BNI）"
       },
       "xs": 12,
       "sm": 6,
@@ -108,7 +198,16 @@
       "type": "checkbox",
       "label": {
         "en": "Clear-sky power",
-        "de": "Leistung bei klarem Himmel"
+        "de": "Leistung bei klarem Himmel",
+        "ru": "Мощность при ясном небе",
+        "pt": "Potência com céu limpo",
+        "nl": "Vermogen bij heldere hemel",
+        "fr": "Puissance par ciel clair",
+        "it": "Potenza a cielo sereno",
+        "es": "Potencia con cielo despejado",
+        "pl": "Moc przy bezchmurnym niebie",
+        "uk": "Потужність при ясному небі",
+        "zh-cn": "晴空功率"
       },
       "xs": 12,
       "sm": 6,
@@ -119,11 +218,29 @@
       "type": "checkbox",
       "label": {
         "en": "Variability band (min/max, paid plans)",
-        "de": "Schwankungsband (min/max, Bezahlpläne)"
+        "de": "Schwankungsband (min/max, Bezahlpläne)",
+        "ru": "Диапазон колебаний (мин/макс, платные тарифы)",
+        "pt": "Banda de variabilidade (mín/máx, planos pagos)",
+        "nl": "Variatieband (min/max, betaalde abonnementen)",
+        "fr": "Bande de variabilité (min/max, offres payantes)",
+        "it": "Banda di variabilità (min/max, piani a pagamento)",
+        "es": "Banda de variabilidad (mín/máx, planes de pago)",
+        "pl": "Pasmo zmienności (min/maks, plany płatne)",
+        "uk": "Діапазон коливань (мін/макс, платні тарифи)",
+        "zh-cn": "波动区间（最小/最大，付费套餐）"
       },
       "help": {
         "en": "Used automatically if your plan includes it",
-        "de": "Wird automatisch genutzt, wenn dein Plan es enthält"
+        "de": "Wird automatisch genutzt, wenn dein Plan es enthält",
+        "ru": "Используется автоматически, если входит в тариф",
+        "pt": "Usado automaticamente se o seu plano o incluir",
+        "nl": "Wordt automatisch gebruikt als je abonnement het bevat",
+        "fr": "Utilisé automatiquement si votre offre l'inclut",
+        "it": "Usato automaticamente se il piano lo include",
+        "es": "Se usa automáticamente si su plan lo incluye",
+        "pl": "Używane automatycznie, jeśli plan to obejmuje",
+        "uk": "Використовується автоматично, якщо входить у тариф",
+        "zh-cn": "如果您的套餐包含此功能，将自动使用"
       },
       "xs": 12,
       "sm": 6,
@@ -134,7 +251,16 @@
       "type": "checkbox",
       "label": {
         "en": "Create SVG charts for VIS (html.*)",
-        "de": "SVG-Diagramme für VIS erzeugen (html.*)"
+        "de": "SVG-Diagramme für VIS erzeugen (html.*)",
+        "ru": "Создавать SVG-графики для VIS (html.*)",
+        "pt": "Criar gráficos SVG para VIS (html.*)",
+        "nl": "SVG-grafieken voor VIS maken (html.*)",
+        "fr": "Créer des graphiques SVG pour VIS (html.*)",
+        "it": "Crea grafici SVG per VIS (html.*)",
+        "es": "Crear gráficos SVG para VIS (html.*)",
+        "pl": "Twórz wykresy SVG dla VIS (html.*)",
+        "uk": "Створювати SVG-графіки для VIS (html.*)",
+        "zh-cn": "为 VIS 生成 SVG 图表（html.*）"
       },
       "newLine": true,
       "xs": 12,
@@ -151,7 +277,16 @@
       "href": "https://pvnode.com/",
       "text": {
         "en": "pvnode.com",
-        "de": "pvnode.com"
+        "de": "pvnode.com",
+        "ru": "pvnode.com",
+        "pt": "pvnode.com",
+        "nl": "pvnode.com",
+        "fr": "pvnode.com",
+        "it": "pvnode.com",
+        "es": "pvnode.com",
+        "pl": "pvnode.com",
+        "uk": "pvnode.com",
+        "zh-cn": "pvnode.com"
       },
       "newLine": true,
       "style": {
@@ -160,7 +295,7 @@
         "display": "inline-block",
         "marginTop": 30
       },
-      "xs": 6,
+      "xs": 12,
       "sm": 6,
       "md": 6,
       "lg": 6
@@ -179,7 +314,7 @@
         "marginBottom": 16,
         "cursor": "pointer"
       },
-      "xs": 6,
+      "xs": 12,
       "sm": 6,
       "md": 6,
       "lg": 6

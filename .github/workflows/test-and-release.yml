@@ -1,12 +1,16 @@
 name: Test and Release
 
-# Runs only on release tags or when started manually (Actions tab -> Run workflow),
-# to save GitHub Actions minutes during development.
 on:
   push:
+    branches:
+      - "main"
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
       - "v[0-9]+.[0-9]+.[0-9]+-**"
+  pull_request: {}
   workflow_dispatch: {}
 
 concurrency:
@@ -20,7 +24,7 @@ jobs:
     steps:
       - uses: ioBroker/testing-action-check@v2
         with:
-          node-version: "22.x"
+          node-version: "24.x"
           lint: true
 
   adapter-tests:
@@ -29,9 +33,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [22.x, 24.x]
-        # Linux only to keep GitHub Actions costs low (macOS = 10x, Windows = 2x minutes)
-        os: [ubuntu-latest]
+        node-version: [22.x, 24.x, 26.x]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: ioBroker/testing-action-adapter@v1
         with:
@@ -51,6 +54,5 @@ jobs:
     steps:
       - uses: ioBroker/testing-action-deploy@v1
         with:
-          node-version: "22.x"
-          npm-token: ${{ secrets.NPM_TOKEN }}
+          node-version: "24.x"
           github-token: ${{ secrets.GITHUB_TOKEN }}

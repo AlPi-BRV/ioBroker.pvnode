@@ -108,6 +108,6 @@ Many thanks to the pvnode team for providing their service and the public API th
 
 MIT License
 
-Copyright (c) 2026 AlPi-BRV
+Copyright (c) 2026 AlPi-BRV <AlPi-BRV@users.noreply.github.com>
 
 See [LICENSE](LICENSE).
