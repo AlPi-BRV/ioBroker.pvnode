@@ -51,7 +51,8 @@
       "xs": 12,
       "sm": 12,
       "md": 6,
-      "lg": 6
+      "lg": 6,
+      "xl": 6
     },
     "siteId": {
       "type": "selectSendTo",
@@ -90,7 +91,8 @@
       "xs": 12,
       "sm": 12,
       "md": 6,
-      "lg": 6
+      "lg": 6,
+      "xl": 6
     },
     "_headerData": {
       "type": "header",
@@ -128,7 +130,8 @@
       "xs": 12,
       "sm": 12,
       "md": 12,
-      "lg": 12
+      "lg": 12,
+      "xl": 12
     },
     "forecastDays": {
       "type": "number",
@@ -151,7 +154,8 @@
       "xs": 12,
       "sm": 6,
       "md": 3,
-      "lg": 3
+      "lg": 3,
+      "xl": 3
     },
     "includeWeather": {
       "type": "checkbox",
@@ -172,7 +176,8 @@
       "xs": 12,
       "sm": 6,
       "md": 3,
-      "lg": 3
+      "lg": 3,
+      "xl": 3
     },
     "includeIrradiance": {
       "type": "checkbox",
@@ -192,7 +197,8 @@
       "xs": 12,
       "sm": 6,
       "md": 3,
-      "lg": 3
+      "lg": 3,
+      "xl": 3
     },
     "includeClearsky": {
       "type": "checkbox",
@@ -212,7 +218,8 @@
       "xs": 12,
       "sm": 6,
       "md": 3,
-      "lg": 3
+      "lg": 3,
+      "xl": 3
     },
     "useVariability": {
       "type": "checkbox",
@@ -245,7 +252,8 @@
       "xs": 12,
       "sm": 6,
       "md": 3,
-      "lg": 3
+      "lg": 3,
+      "xl": 3
     },
     "createSvg": {
       "type": "checkbox",
@@ -266,7 +274,8 @@
       "xs": 12,
       "sm": 12,
       "md": 6,
-      "lg": 6
+      "lg": 6,
+      "xl": 6
     },
     "_divider": {
       "type": "divider",
@@ -298,7 +307,8 @@
       "xs": 12,
       "sm": 6,
       "md": 6,
-      "lg": 6
+      "lg": 6,
+      "xl": 6
     },
     "_donate": {
       "type": "staticImage",
@@ -317,7 +327,8 @@
       "xs": 12,
       "sm": 6,
       "md": 6,
-      "lg": 6
+      "lg": 6,
+      "xl": 6
     }
   }
 }

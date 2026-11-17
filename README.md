@@ -78,6 +78,10 @@ Many thanks to the pvnode team for providing their service and the public API th
     ### **WORK IN PROGRESS**
 -->
 
+### 0.2.2 (2026-11-17)
+
+- Settings page: layout for extra-wide screens added (repository checker)
+
 ### 0.2.1 (2026-11-15)
 
 - Settings translated into all ioBroker languages
