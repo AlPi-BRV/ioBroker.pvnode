@@ -27,7 +27,7 @@ PV-Ertragsprognose von [pvnode.com](https://pvnode.com) für ioBroker.
 | `days.N.energy` | Prognose für Tag N (0 = heute) |
 | `strings.N.*` | Werte pro String |
 | `json.today` | Tageskurve für Diagramme |
-| `info.requestsRemaining` | Restliche Anfragen in diesem Monat |
+| `info.requestsRemaining` | Restliche Anfragen in diesem Monat (`-1` = Plan ohne Begrenzung) |
 | `control.refresh` | Sofort neu abfragen (kostet eine Anfrage) |
 
 ## Wie kam es zu diesem Adapter?

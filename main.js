@@ -15,7 +15,7 @@
 const utils = require('@iobroker/adapter-core');
 const { PvnodeApi, PvnodeError } = require('./lib/api');
 const { prepare, computeStates, chartSeries, WEATHER_FIELDS } = require('./lib/compute');
-const { CHANNELS, commonFor } = require('./lib/states');
+const { CHANNELS, FIXED, REFRESH_NAME, commonFor, channelName, stringChannelName } = require('./lib/states');
 const { localDate, isoLocal } = require('./lib/time');
 const { dayChart, daysChart } = require('./lib/svg');
 
@@ -35,6 +35,21 @@ function compass(deg) {
         return '?';
     }
     return names[Math.round((((deg % 360) + 360) % 360) / 45) % 8];
+}
+
+/**
+ * Quota header value as number: "unmetered" (plans without a cap) = -1, unknown = null.
+ *
+ * @param {unknown} v parsed header value
+ */
+function quotaNumber(v) {
+    if (typeof v === 'number' && Number.isFinite(v)) {
+        return v;
+    }
+    if (typeof v === 'string' && v.trim().toLowerCase() === 'unmetered') {
+        return -1;
+    }
+    return null;
 }
 
 class Pvnode extends utils.Adapter {
@@ -385,21 +400,9 @@ class Pvnode extends utils.Adapter {
         // charts are only rebuilt when a new payload arrives
         const now = Date.now();
         const today = localDate(now, tz);
-        await this.ensureState('json.forecast', {
-            type: 'string',
-            role: 'json',
-            name: { en: 'Full forecast series', de: 'Komplette Prognosekurve' },
-        });
-        await this.ensureState('json.today', {
-            type: 'string',
-            role: 'json',
-            name: { en: 'Forecast series today', de: 'Prognosekurve heute' },
-        });
-        await this.ensureState('json.daily', {
-            type: 'string',
-            role: 'json',
-            name: { en: 'Daily forecast', de: 'Tagesprognose' },
-        });
+        for (const id of ['json.forecast', 'json.today', 'json.daily']) {
+            await this.ensureState(id);
+        }
         await this.setStateAsync('json.forecast', JSON.stringify(chartSeries(this.prepared)), true);
         await this.setStateAsync(
             'json.today',
@@ -446,17 +449,9 @@ class Pvnode extends utils.Adapter {
             'html.days': () => daysChart(p, now, opt),
         };
         for (const [id, fn] of Object.entries(charts)) {
-            await this.ensureState(id, { type: 'string', role: 'html', name: this.chartName(id) });
+            await this.ensureState(id);
             await this.setStateAsync(id, fn(), true);
         }
-    }
-
-    chartName(id) {
-        return {
-            'html.today': { en: 'SVG chart: power curve today', de: 'SVG-Diagramm: Leistungskurve heute' },
-            'html.tomorrow': { en: 'SVG chart: power curve tomorrow', de: 'SVG-Diagramm: Leistungskurve morgen' },
-            'html.days': { en: 'SVG chart: daily energy', de: 'SVG-Diagramm: Tagesertrag' },
-        }[id];
     }
 
     startComputeTimer() {
@@ -474,94 +469,27 @@ class Pvnode extends utils.Adapter {
     // ------------------------------------------------------------------ objects
 
     async createBaseObjects() {
+        // extendObject (not setObjectNotExists) so that existing installations get updated names/types
         for (const [ch, name] of Object.entries(CHANNELS)) {
-            await this.setObjectNotExistsAsync(ch, { type: 'channel', common: { name }, native: {} });
+            await this.extendObjectAsync(ch, { type: 'channel', common: { name }, native: {} });
+            this.created.add(ch);
         }
-        const info = {
-            'info.connection': {
-                type: 'boolean',
-                role: 'indicator.connected',
-                name: { en: 'Connected to pvnode', de: 'Verbunden mit pvnode' },
-            },
-            'info.stale': {
-                type: 'boolean',
-                role: 'indicator',
-                name: {
-                    en: 'Forecast is outdated (last request failed)',
-                    de: 'Prognose veraltet (letzte Abfrage fehlgeschlagen)',
-                },
-            },
-            'info.lastError': { type: 'string', role: 'text', name: { en: 'Last error', de: 'Letzter Fehler' } },
-            'info.lastUpdate': {
-                type: 'string',
-                role: 'date',
-                name: { en: 'Last successful request', de: 'Letzte erfolgreiche Abfrage' },
-            },
-            'info.computedAt': {
-                type: 'string',
-                role: 'text',
-                name: { en: 'Forecast computed at (pvnode)', de: 'Prognose berechnet um (pvnode)' },
-            },
-            'info.nextPoll': { type: 'string', role: 'date', name: { en: 'Next request', de: 'Nächste Abfrage' } },
-            'info.requestsLimit': {
-                type: 'mixed',
-                role: 'value',
-                name: { en: 'Monthly request limit', de: 'Monatliches Anfragelimit' },
-            },
-            'info.requestsUsed': {
-                type: 'number',
-                role: 'value',
-                name: { en: 'Requests used this month', de: 'Anfragen diesen Monat verbraucht' },
-            },
-            'info.requestsRemaining': {
-                type: 'mixed',
-                role: 'value',
-                name: { en: 'Requests remaining this month', de: 'Verbleibende Anfragen diesen Monat' },
-            },
-            'info.requestsReset': {
-                type: 'string',
-                role: 'date',
-                name: { en: 'Request counter reset', de: 'Zurücksetzung des Anfragezählers' },
-            },
-            'info.availableGroups': {
-                type: 'string',
-                role: 'text',
-                name: { en: 'Data groups allowed by plan', de: 'Vom Plan erlaubte Datengruppen' },
-            },
-            'info.variability': {
-                type: 'boolean',
-                role: 'indicator',
-                name: { en: 'Variability band available', de: 'Schwankungsband verfügbar' },
-            },
-            'info.forecastDays': {
-                type: 'number',
-                role: 'value',
-                name: { en: 'Number of forecast days', de: 'Anzahl Prognosetage' },
-            },
-            'info.cache': {
-                type: 'string',
-                role: 'json',
-                name: { en: 'Cached forecast (internal)', de: 'Zwischengespeicherte Prognose (intern)' },
-            },
-            'site.name': { type: 'string', role: 'text', name: { en: 'Site name', de: 'Name des Standorts' } },
-            'site.id': { type: 'string', role: 'text', name: { en: 'Site ID', de: 'Standort-ID' } },
-            'site.power_kw': {
-                type: 'number',
-                role: 'value',
-                unit: 'kWp',
-                name: { en: 'Installed power', de: 'Installierte Leistung' },
-            },
-        };
-        for (const [id, c] of Object.entries(info)) {
-            await this.ensureState(id, c);
+        for (const id of Object.keys(FIXED)) {
+            if (id.startsWith('info.') || id.startsWith('site.')) {
+                await this.ensureState(id);
+            }
         }
-        await this.setObjectNotExistsAsync('control.refresh', {
+        // up to 0.2.2 requestsLimit/requestsRemaining were "mixed" and could hold the text "unmetered"
+        for (const id of ['info.requestsLimit', 'info.requestsRemaining']) {
+            const st = await this.getStateAsync(id);
+            if (st && st.val !== null && typeof st.val !== 'number') {
+                await this.setStateAsync(id, quotaNumber(st.val), true);
+            }
+        }
+        await this.extendObjectAsync('control.refresh', {
             type: 'state',
             common: {
-                name: {
-                    en: 'Refresh forecast now (costs one request)',
-                    de: 'Prognose jetzt abrufen (kostet eine Anfrage)',
-                },
+                name: REFRESH_NAME,
                 type: 'boolean',
                 role: 'button',
                 read: false,
@@ -581,9 +509,9 @@ class Pvnode extends utils.Adapter {
         for (let i = 2; i < parts.length; i++) {
             const ch = parts.slice(0, i).join('.');
             if (!this.created.has(ch)) {
-                await this.setObjectNotExistsAsync(ch, {
+                await this.extendObjectAsync(ch, {
                     type: 'channel',
-                    common: { name: this.channelName(ch) },
+                    common: { name: channelName(ch) },
                     native: {},
                 });
                 this.created.add(ch);
@@ -594,24 +522,6 @@ class Pvnode extends utils.Adapter {
         common.write = false;
         await this.extendObjectAsync(id, { type: 'state', common, native: {} });
         this.created.add(id);
-    }
-
-    channelName(ch) {
-        const [root, idx] = ch.split('.');
-        if (root === 'days') {
-            const n = Number(idx);
-            if (n === 0) {
-                return { en: 'Today', de: 'Heute' };
-            }
-            if (n === 1) {
-                return { en: 'Tomorrow', de: 'Morgen' };
-            }
-            return { en: `In ${n} days`, de: `In ${n} Tagen` };
-        }
-        if (root === 'strings') {
-            return { en: `String ${Number(idx) + 1}`, de: `String ${Number(idx) + 1}` };
-        }
-        return ch;
     }
 
     async removeSurplus(root, count, max) {
@@ -701,9 +611,7 @@ class Pvnode extends utils.Adapter {
             const ch = `strings.${i}`;
             await this.extendObjectAsync(ch, {
                 type: 'channel',
-                common: {
-                    name: `String ${i + 1}: ${compass(s.orientation)} ${s.orientation}°, ${s.slope}° Neigung, ${s.power_kw} kWp`,
-                },
+                common: { name: stringChannelName(i, s) },
                 native: { string_id: s.id },
             });
             this.created.add(ch);
@@ -720,9 +628,9 @@ class Pvnode extends utils.Adapter {
         if (!q) {
             return;
         }
-        await this.setStateAsync('info.requestsLimit', q.limit ?? null, true);
+        await this.setStateAsync('info.requestsLimit', quotaNumber(q.limit), true);
         await this.setStateAsync('info.requestsUsed', typeof q.used === 'number' ? q.used : null, true);
-        await this.setStateAsync('info.requestsRemaining', q.remaining ?? null, true);
+        await this.setStateAsync('info.requestsRemaining', quotaNumber(q.remaining), true);
         await this.setStateAsync('info.requestsReset', q.reset || null, true);
     }
 }

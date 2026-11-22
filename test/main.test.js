@@ -100,6 +100,7 @@ require.cache['stub:adapter-core'] = {
 };
 
 const createAdapter = require('../main.js');
+const { LANGS } = require('../lib/states');
 const freePayload = require('./fixtures/forecast_all.json');
 const plusPayload = require('./fixtures/forecast_variability.json');
 
@@ -193,7 +194,8 @@ test('free plan: probes variability once, falls back, writes states and schedule
     assert.strictEqual(v('tomorrow.energy'), 9.33);
     assert.strictEqual(v('site.name'), 'BRV');
     assert.strictEqual(v('site.power_kw'), 13.4);
-    assert.ok(a.objects.get('strings.0').common.name.includes('O 90°'));
+    assert.strictEqual(a.objects.get('strings.0').common.name.en, 'String 1: azimuth 90°, tilt 13°, 6.7 kWp');
+    assert.strictEqual(a.objects.get('strings.0').common.name.de, 'String 1: Azimut 90°, Neigung 13°, 6.7 kWp');
     assert.strictEqual(v('strings.1.string_id'), 'str_ea5be30e');
     assert.ok(typeof v('today.remaining') === 'number');
     assert.ok(a.objects.has('weather.temp'));
@@ -223,6 +225,65 @@ test('plus plan: variability band is used', async () => {
     assert.strictEqual(v('today.energy_min'), 7.41);
     assert.strictEqual(v('info.requestsLimit'), 3000);
     assert.ok(a.objects.has('strings.0.power_max'));
+});
+
+test('all objects have names in 11 languages and valid types', async () => {
+    const payload = shiftToToday(plusPayload);
+    mockFetch(url => (url.includes('/v2/sites/') ? { status: 200, body: [SITE] } : { status: 200, body: payload, headers: quota(5, '3000') }));
+    const a = createAdapter({ config: { ...baseConfig, includeIrradiance: true, includeClearsky: true } });
+    await a.handlers.ready();
+    const missing = [];
+    for (const [id, obj] of a.objects) {
+        const name = obj.common && obj.common.name;
+        if (typeof name !== 'object' || LANGS.some(l => typeof name[l] !== 'string' || !name[l])) {
+            missing.push(id);
+        }
+        if (obj.type === 'state') {
+            assert.ok(['number', 'string', 'boolean'].includes(obj.common.type), `${id}: type ${obj.common.type}`);
+        }
+    }
+    assert.deepStrictEqual(missing, []);
+    assert.ok(a.objects.size > 60, `only ${a.objects.size} objects`);
+    assert.strictEqual(a.objects.get('days.1').common.name.es, 'Mañana');
+    assert.strictEqual(a.objects.get('weather.ghi').common.role, 'value.radiation');
+    assert.strictEqual(a.objects.get('now.slot_start').common.role, 'date');
+});
+
+test('unmetered plan: request limit and remaining are -1', async () => {
+    const payload = shiftToToday(plusPayload);
+    mockFetch(url =>
+        url.includes('/v2/sites/')
+            ? { status: 200, body: [SITE] }
+            : {
+                  status: 200,
+                  body: payload,
+                  headers: { ...quota(5), 'RequestLimit-Limit': 'unmetered', 'RequestLimit-Remaining': 'unmetered' },
+              },
+    );
+    const a = createAdapter({ config: baseConfig });
+    await a.handlers.ready();
+    assert.strictEqual(a.states.get('info.requestsLimit').val, -1);
+    assert.strictEqual(a.states.get('info.requestsRemaining').val, -1);
+    assert.strictEqual(a.states.get('info.requestsUsed').val, 5);
+    assert.strictEqual(a.objects.get('info.requestsLimit').common.type, 'number');
+});
+
+test('update from 0.2.2: existing objects get new names and types', async () => {
+    const objects = new Map([
+        ['days', { type: 'channel', common: { name: { en: 'Daily forecast (0 = today)', de: 'Tagesprognose (0 = heute)' } }, native: {} }],
+        ['days.0', { type: 'channel', common: { name: { en: 'Today', de: 'Heute' } }, native: {} }],
+        ['info.requestsLimit', { type: 'state', common: { name: { en: 'Monthly request limit', de: 'Monatliches Anfragelimit' }, type: 'mixed', role: 'value' }, native: {} }],
+        ['control.refresh', { type: 'state', common: { name: { en: 'Refresh', de: 'Abrufen' }, type: 'boolean', role: 'button' }, native: {} }],
+    ]);
+    const states = new Map([['info.requestsLimit', { val: 'unmetered', ack: true }]]);
+    mockFetch(() => ({ status: 401, body: { detail: 'Invalid API key' } }));
+    const a = createAdapter({ config: baseConfig, objects, states });
+    await a.handlers.ready();
+    assert.strictEqual(a.objects.get('days').common.name.fr, "Prévision journalière (0 = aujourd'hui)");
+    assert.strictEqual(a.objects.get('info.requestsLimit').common.type, 'number');
+    assert.strictEqual(a.objects.get('info.requestsLimit').common.name.pl, 'Miesięczny limit zapytań (-1 = bez limitu)');
+    assert.strictEqual(a.objects.get('control.refresh').common.name['zh-cn'], '立即刷新预测（消耗一次请求）');
+    assert.strictEqual(a.states.get('info.requestsLimit').val, -1);
 });
 
 test('invalid key: stops without forecast request', async () => {

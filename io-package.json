@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pvnode",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "news": {
+      "0.2.3": {
+        "en": "All object names translated into 11 languages, request limit as number (-1 = unlimited), units and roles refined; existing objects are updated",
+        "de": "Alle Objektnamen in 11 Sprachen übersetzt, Anfragelimit als Zahl (-1 = unbegrenzt), Einheiten und Rollen verbessert; bestehende Objekte werden aktualisiert",
+        "ru": "Все названия объектов переведены на 11 языков, лимит запросов в виде числа (-1 = без ограничений), уточнены единицы и роли; существующие объекты обновляются",
+        "pt": "Todos os nomes de objetos traduzidos para 11 idiomas, limite de pedidos como número (-1 = ilimitado), unidades e funções melhoradas; objetos existentes são atualizados",
+        "nl": "Alle objectnamen vertaald in 11 talen, aanvraaglimiet als getal (-1 = onbeperkt), eenheden en rollen verbeterd; bestaande objecten worden bijgewerkt",
+        "fr": "Tous les noms d’objets traduits en 11 langues, limite de requêtes sous forme de nombre (-1 = illimité), unités et rôles affinés ; les objets existants sont mis à jour",
+        "it": "Tutti i nomi degli oggetti tradotti in 11 lingue, limite di richieste come numero (-1 = illimitato), unità e ruoli migliorati; gli oggetti esistenti vengono aggiornati",
+        "es": "Todos los nombres de objetos traducidos a 11 idiomas, límite de solicitudes como número (-1 = ilimitado), unidades y roles mejorados; los objetos existentes se actualizan",
+        "pl": "Wszystkie nazwy obiektów przetłumaczone na 11 języków, limit zapytań jako liczba (-1 = bez limitu), poprawione jednostki i role; istniejące obiekty są aktualizowane",
+        "uk": "Усі назви обʼєктів перекладено 11 мовами, ліміт запитів як число (-1 = без обмежень), уточнено одиниці та ролі; наявні обʼєкти оновлюються",
+        "zh-cn": "所有对象名称已翻译为 11 种语言，请求上限改为数字（-1 = 无限制），完善了单位和角色；现有对象会自动更新"
+      },
       "0.2.2": {
         "en": "Settings page: layout for extra-wide screens added (repository checker)",
         "de": "Einstellungsseite: Layout für sehr breite Bildschirme ergänzt (Repository-Checker)",
@@ -135,7 +148,16 @@
       "common": {
         "name": {
           "en": "Information",
-          "de": "Information"
+          "de": "Information",
+          "ru": "Информация",
+          "pt": "Informação",
+          "nl": "Informatie",
+          "fr": "Information",
+          "it": "Informazioni",
+          "es": "Información",
+          "pl": "Informacje",
+          "uk": "Інформація",
+          "zh-cn": "信息"
         }
       },
       "native": {}
@@ -147,7 +169,16 @@
         "role": "indicator.connected",
         "name": {
           "en": "Connected to pvnode",
-          "de": "Verbunden mit pvnode"
+          "de": "Verbunden mit pvnode",
+          "ru": "Подключено к pvnode",
+          "pt": "Ligado ao pvnode",
+          "nl": "Verbonden met pvnode",
+          "fr": "Connecté à pvnode",
+          "it": "Connesso a pvnode",
+          "es": "Conectado a pvnode",
+          "pl": "Połączono z pvnode",
+          "uk": "Підключено до pvnode",
+          "zh-cn": "已连接到 pvnode"
         },
         "type": "boolean",
         "read": true,

@@ -47,7 +47,7 @@
 | `json.daily` | Daily values as returned by pvnode |
 | `html.today` / `html.tomorrow` | Ready-made SVG power curve (dark theme) – show it in VIS with the basic widget "String (unescaped)" |
 | `html.days` | Ready-made SVG bar chart of the daily energy |
-| `info.requestsRemaining` | Remaining requests this month |
+| `info.requestsRemaining` | Remaining requests this month (`-1` = unlimited plan) |
 | `info.nextPoll` | Time of the next API request |
 | `control.refresh` | Request a new forecast now (costs one request) |
 
@@ -77,6 +77,15 @@ Many thanks to the pvnode team for providing their service and the public API th
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
+### 0.2.3 (2026-11-23)
+
+- All object names (states and channels) translated into the 11 ioBroker languages (repository checker E6001)
+- `info.requestsLimit` and `info.requestsRemaining` are now numbers; `-1` means unlimited ("unmetered") plan (E3005/E1009)
+- Units and roles refined: wind speed in m/s, snow water equivalent in mm, irradiance with role `value.radiation`, `now.slot_start` with role `date`
+- String channel names no longer fixed in German
+- Existing objects are updated on adapter start
+- Dependabot: open pull request limit raised to 15
 
 ### 0.2.2 (2026-11-17)
 
