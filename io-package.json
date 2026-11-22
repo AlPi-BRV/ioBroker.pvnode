@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pvnode",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "news": {
+      "0.2.4": {
+        "en": "States with custom settings (history etc.) are no longer deleted, random delay before forecast requests, small code cleanups",
+        "de": "Datenpunkte mit Custom-Einstellungen (History usw.) werden nicht mehr gelöscht, zufällige Verzögerung vor Prognose-Abfragen, kleine Code-Aufräumarbeiten",
+        "ru": "Состояния с пользовательскими настройками (история и т. п.) больше не удаляются, случайная задержка перед запросами прогноза, небольшая чистка кода",
+        "pt": "Estados com definições personalizadas (histórico, etc.) já não são eliminados, atraso aleatório antes dos pedidos de previsão, pequenas limpezas de código",
+        "nl": "Statussen met aangepaste instellingen (history enz.) worden niet meer verwijderd, willekeurige vertraging vóór voorspellingsaanvragen, kleine code-opschoning",
+        "fr": "Les états avec des paramètres personnalisés (historique, etc.) ne sont plus supprimés, délai aléatoire avant les requêtes de prévision, petits nettoyages du code",
+        "it": "Gli stati con impostazioni personalizzate (cronologia ecc.) non vengono più eliminati, ritardo casuale prima delle richieste di previsione, piccole pulizie del codice",
+        "es": "Los estados con ajustes personalizados (historial, etc.) ya no se eliminan, retraso aleatorio antes de las solicitudes de previsión, pequeñas limpiezas de código",
+        "pl": "Stany z ustawieniami niestandardowymi (historia itp.) nie są już usuwane, losowe opóźnienie przed zapytaniami o prognozę, drobne porządki w kodzie",
+        "uk": "Стани з користувацькими налаштуваннями (історія тощо) більше не видаляються, випадкова затримка перед запитами прогнозу, невелике прибирання коду",
+        "zh-cn": "带有自定义设置（历史记录等）的状态不再被删除，预测请求前加入随机延迟，少量代码清理"
+      },
       "0.2.3": {
         "en": "All object names translated into 11 languages, request limit as number (-1 = unlimited), units and roles refined; existing objects are updated",
         "de": "Alle Objektnamen in 11 Sprachen übersetzt, Anfragelimit als Zahl (-1 = unbegrenzt), Einheiten und Rollen verbessert; bestehende Objekte werden aktualisiert",

@@ -78,7 +78,14 @@ Many thanks to the pvnode team for providing their service and the public API th
     ### **WORK IN PROGRESS**
 -->
 
-### 0.2.3 (2026-11-23)
+### 0.2.4 (2026-11-22)
+
+- States with custom settings (e.g. history, InfluxDB, SQL) are no longer deleted when they are not needed anymore; a warning is logged instead
+- Random delay of up to 90 seconds per installation before each forecast request, so not all installations ask pvnode at the same second
+- Chart texts fall back to English if the system language cannot be read
+- Small code cleanups (English compass abbreviations, handled promise for `info.nextPoll`)
+
+### 0.2.3 (2026-11-22)
 
 - All object names (states and channels) translated into the 11 ioBroker languages (repository checker E6001)
 - `info.requestsLimit` and `info.requestsRemaining` are now numbers; `-1` means unlimited ("unmetered") plan (E3005/E1009)

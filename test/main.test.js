@@ -40,6 +40,16 @@ class FakeAdapter {
     async getForeignObjectAsync() {
         return { common: { language: "de" } };
     }
+    async getForeignObjectsAsync(pattern) {
+        const prefix = pattern.replace(`${this.namespace}.`, '').replace(/\*$/, '');
+        const res = {};
+        for (const [k, o] of this.objects) {
+            if (k.startsWith(prefix)) {
+                res[`${this.namespace}.${k}`] = { ...o, _id: `${this.namespace}.${k}` };
+            }
+        }
+        return res;
+    }
     async getObjectAsync(id) {
         return this.objects.get(id) || null;
     }
@@ -204,7 +214,8 @@ test('free plan: probes variability once, falls back, writes states and schedule
 
     const poll = a.timers.find(t => t.type === 'timeout' && t.ms > 3600000);
     assert.ok(poll, 'poll scheduled from next_poll_at');
-    assert.ok(Math.abs(poll.ms - (3 * 3600000 + 30000)) < 5000, `delay ${poll.ms}`);
+    // next_poll_at + 30 s grace + random 0..90 s per instance
+    assert.ok(poll.ms > 3 * 3600000 + 25000 && poll.ms < 3 * 3600000 + 125000, `delay ${poll.ms}`);
 
     // ---- restart: cache is used, no forecast request ----
     const calls2 = mockFetch(url => (url.includes('/v2/sites/') ? { status: 200, body: [SITE] } : { status: 500, body: 'x' }));
@@ -286,6 +297,24 @@ test('update from 0.2.2: existing objects get new names and types', async () => 
     assert.strictEqual(a.states.get('info.requestsLimit').val, -1);
 });
 
+test('objects with custom settings are not deleted', async () => {
+    const payload = shiftToToday(freePayload);
+    mockFetch(url => (url.includes('/v2/sites/') ? { status: 200, body: [SITE] } : { status: 200, body: payload, headers: quota(33) }));
+    const objects = new Map([
+        ['weather.ghi', { type: 'state', common: { name: 'x', custom: { 'history.0': { enabled: true } } }, native: {} }],
+        ['days.5', { type: 'channel', common: { name: 'x' }, native: {} }],
+        ['days.5.energy', { type: 'state', common: { name: 'x', custom: { 'influxdb.0': { enabled: true } } }, native: {} }],
+        ['days.6', { type: 'channel', common: { name: 'x' }, native: {} }],
+        ['days.6.energy', { type: 'state', common: { name: 'x' }, native: {} }],
+    ]);
+    const a = createAdapter({ config: { ...baseConfig, useVariability: false }, objects });
+    await a.handlers.ready();
+    assert.ok(a.objects.has('weather.ghi'), 'ghi with history kept');
+    assert.ok(a.objects.has('days.5.energy'), 'days.5 with influxdb kept');
+    assert.ok(!a.objects.has('days.6'), 'days.6 deleted');
+    assert.strictEqual(a.logs.filter(l => l.startsWith('warn') && l.includes('custom settings')).length, 2);
+});
+
 test('invalid key: stops without forecast request', async () => {
     const calls = mockFetch(() => ({ status: 401, body: { detail: 'Invalid API key' } }));
     const a = createAdapter({ config: baseConfig });
@@ -305,7 +334,7 @@ test('429: pauses until RequestLimit-Reset', async () => {
     const a = createAdapter({ config: { ...baseConfig, useVariability: false } });
     await a.handlers.ready();
     const poll = a.timers.find(t => t.type === 'timeout' && t.ms > 3600000);
-    assert.ok(poll && Math.abs(poll.ms - 5 * 3600000) < 60000, `delay ${poll && poll.ms}`);
+    assert.ok(poll && poll.ms > 5 * 3600000 && poll.ms < 5 * 3600000 + 150000, `delay ${poll && poll.ms}`);
     assert.strictEqual(a.states.get('info.requestsRemaining').val, 0);
 });
 

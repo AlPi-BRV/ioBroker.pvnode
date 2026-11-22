@@ -20,6 +20,8 @@ const { localDate, isoLocal } = require('./lib/time');
 const { dayChart, daysChart } = require('./lib/svg');
 
 const GRACE_MS = 30 * 1000;
+// random extra delay per instance, so not all installations poll pvnode at the same second
+const JITTER_MAX_MS = 90 * 1000;
 const MIN_DELAY_MS = 60 * 1000;
 const MAX_DELAY_MS = 24 * 3600 * 1000;
 const FALLBACK_DELAY_MS = 3600 * 1000;
@@ -30,7 +32,7 @@ const MAX_STRINGS = 8;
 const OPTIONAL_GROUPS = ['weather', 'irradiance', 'clearsky'];
 
 function compass(deg) {
-    const names = ['N', 'NO', 'O', 'SO', 'S', 'SW', 'W', 'NW'];
+    const names = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
     if (typeof deg !== 'number') {
         return '?';
     }
@@ -68,8 +70,10 @@ class Pvnode extends utils.Adapter {
         this.polling = false;
         this.stopped = false;
         this.created = new Set();
-        this.lang = 'de';
+        this.lang = 'en';
         this.stringNames = [];
+        this.pollOffsetMs = GRACE_MS + Math.floor(Math.random() * JITTER_MAX_MS);
+        this.customWarned = new Set();
 
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
@@ -91,7 +95,7 @@ class Pvnode extends utils.Adapter {
             const sys = await this.getForeignObjectAsync('system.config');
             this.lang = sys && sys.common && sys.common.language === 'de' ? 'de' : 'en';
         } catch {
-            this.lang = 'de';
+            this.lang = 'en';
         }
 
         const apiKey = String(this.config.apiKey || '').trim();
@@ -145,7 +149,7 @@ class Pvnode extends utils.Adapter {
         const restored = await this.restoreCache();
         if (restored && restored.nextPollAt && restored.nextPollAt > Date.now()) {
             this.log.info(`Using cached forecast, next poll at ${new Date(restored.nextPollAt).toISOString()}`);
-            this.schedulePoll(restored.nextPollAt - Date.now() + GRACE_MS);
+            this.schedulePoll(restored.nextPollAt - Date.now() + this.pollOffsetMs);
         } else {
             await this.poll();
         }
@@ -217,7 +221,9 @@ class Pvnode extends utils.Adapter {
             this.pollTimer = null;
             this.poll().catch(e => this.log.error(`Poll failed: ${e.message}`));
         }, delay);
-        this.setState('info.nextPoll', new Date(Date.now() + delay).toISOString(), true);
+        this.setStateAsync('info.nextPoll', new Date(Date.now() + delay).toISOString(), true).catch(e =>
+            this.log.debug(`Could not write info.nextPoll: ${e.message}`),
+        );
         this.log.debug(`Next poll in ${Math.round(delay / 60000)} min`);
     }
 
@@ -288,7 +294,7 @@ class Pvnode extends utils.Adapter {
             await this.setStateAsync('info.lastError', '', true);
 
             const next = body.next_poll_at ? Date.parse(body.next_poll_at) : NaN;
-            this.schedulePoll(Number.isFinite(next) ? next - Date.now() + GRACE_MS : FALLBACK_DELAY_MS);
+            this.schedulePoll(Number.isFinite(next) ? next - Date.now() + this.pollOffsetMs : FALLBACK_DELAY_MS);
             if (manual) {
                 this.log.info('Manual refresh done');
             }
@@ -333,7 +339,7 @@ class Pvnode extends utils.Adapter {
             const until = Number.isFinite(reset) ? reset : Date.now() + MAX_DELAY_MS;
             this.log.warn(`pvnode monthly request limit reached. Pausing until ${new Date(until).toISOString()}`);
             await this.setStateAsync('info.stale', true, true);
-            this.schedulePoll(Math.min(until - Date.now() + GRACE_MS, MAX_DELAY_MS));
+            this.schedulePoll(Math.min(until - Date.now() + this.pollOffsetMs, MAX_DELAY_MS));
             return;
         }
 
@@ -528,8 +534,7 @@ class Pvnode extends utils.Adapter {
         for (let i = count; i < max; i++) {
             const id = `${root}.${i}`;
             const obj = await this.getObjectAsync(id);
-            if (obj) {
-                await this.delObjectAsync(id, { recursive: true });
+            if (obj && (await this.deleteUnlessCustom(id, true))) {
                 for (const k of [...this.created]) {
                     if (k === id || k.startsWith(`${id}.`)) {
                         this.created.delete(k);
@@ -537,6 +542,38 @@ class Pvnode extends utils.Adapter {
                 }
             }
         }
+    }
+
+    /**
+     * Delete an own object (optionally with children), but keep it if it or one of its children
+     * has custom settings (e.g. history, influxdb, sql), so the user's configuration is not lost.
+     *
+     * @param {string} id relative id
+     * @param {boolean} recursive also delete children
+     * @returns {Promise<boolean>} true if deleted
+     */
+    async deleteUnlessCustom(id, recursive) {
+        const obj = await this.getObjectAsync(id);
+        if (!obj) {
+            return false;
+        }
+        const objs = [obj];
+        if (recursive) {
+            const children = await this.getForeignObjectsAsync(`${this.namespace}.${id}.*`);
+            objs.push(...Object.values(children || {}));
+        }
+        const withCustom = objs.find(o => o && o.common && o.common.custom && Object.keys(o.common.custom).length);
+        if (withCustom) {
+            if (!this.customWarned.has(id)) {
+                this.customWarned.add(id);
+                this.log.warn(
+                    `${withCustom._id || id} is no longer needed but has custom settings (e.g. history), so it is not deleted. Remove the custom settings or delete it manually.`,
+                );
+            }
+            return false;
+        }
+        await this.delObjectAsync(id, { recursive });
+        return true;
     }
 
     async cleanupOptionalWeather() {
@@ -556,22 +593,13 @@ class Pvnode extends utils.Adapter {
         }
         for (const f of WEATHER_FIELDS) {
             if (!wanted.has(f)) {
-                const obj = await this.getObjectAsync(`weather.${f}`);
-                if (obj) {
-                    await this.delObjectAsync(`weather.${f}`);
-                }
+                await this.deleteUnlessCustom(`weather.${f}`, false);
             }
         }
         if (!this.config.includeClearsky) {
-            for (const id of ['now.power_clearsky']) {
-                if (await this.getObjectAsync(id)) {
-                    await this.delObjectAsync(id);
-                }
-            }
+            await this.deleteUnlessCustom('now.power_clearsky', false);
             for (let i = 0; i < MAX_DAYS; i++) {
-                if (await this.getObjectAsync(`days.${i}.energy_clearsky`)) {
-                    await this.delObjectAsync(`days.${i}.energy_clearsky`);
-                }
+                await this.deleteUnlessCustom(`days.${i}.energy_clearsky`, false);
             }
         }
     }
@@ -584,9 +612,9 @@ class Pvnode extends utils.Adapter {
         await this.setStateAsync('site.power_kw', Math.round(total * 100) / 100, true);
         const dirDe = {
             N: 'Nord',
-            NO: 'Nordost',
-            O: 'Ost',
-            SO: 'Südost',
+            NE: 'Nordost',
+            E: 'Ost',
+            SE: 'Südost',
             S: 'Süd',
             SW: 'Südwest',
             W: 'West',
@@ -594,9 +622,9 @@ class Pvnode extends utils.Adapter {
         };
         const dirEn = {
             N: 'North',
-            NO: 'Northeast',
-            O: 'East',
-            SO: 'Southeast',
+            NE: 'Northeast',
+            E: 'East',
+            SE: 'Southeast',
             S: 'South',
             SW: 'Southwest',
             W: 'West',
