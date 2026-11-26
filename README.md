@@ -3,8 +3,13 @@
 # ioBroker.pvnode
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.pvnode.svg)](https://www.npmjs.com/package/iobroker.pvnode)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.pvnode.svg)](https://www.npmjs.com/package/iobroker.pvnode)
+![Number of Installations](https://iobroker.live/badges/pvnode-installed.svg)
+[![Test and Release](https://github.com/AlPi-BRV/ioBroker.pvnode/actions/workflows/test-and-release.yml/badge.svg)](https://github.com/AlPi-BRV/ioBroker.pvnode/actions/workflows/test-and-release.yml)
 [![License](https://img.shields.io/github/license/AlPi-BRV/ioBroker.pvnode)](LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-%E2%98%95-yellow)](https://buymeacoffee.com/alpi_brv)
+
+[![NPM](https://nodei.co/npm/iobroker.pvnode.png?downloads=true)](https://nodei.co/npm/iobroker.pvnode/)
 
 <a href="https://buymeacoffee.com/alpi_brv"><img src="admin/coffee.png" alt="Buy me a coffee" width="200"></a>
 
