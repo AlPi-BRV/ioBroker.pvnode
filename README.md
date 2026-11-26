@@ -78,6 +78,11 @@ Many thanks to the pvnode team for providing their service and the public API th
     ### **WORK IN PROGRESS**
 -->
 
+### 0.2.5 (2026-11-26)
+
+- Numbers in the SVG charts use the decimal separator from the ioBroker system settings instead of a fixed German format (review by mcm1957)
+- Local 5-minute computation uses a setTimeout chain instead of setInterval, so runs can never overlap
+
 ### 0.2.4 (2026-11-22)
 
 - States with custom settings (e.g. history, InfluxDB, SQL) are no longer deleted when they are not needed anymore; a warning is logged instead

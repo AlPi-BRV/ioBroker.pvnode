@@ -18,6 +18,7 @@ class FakeAdapter {
         this.config = { ...(options.config || {}) };
         this.objects = options.objects || new Map();
         this.states = options.states || new Map();
+        this.sysConfig = options.sysConfig || { common: { language: 'de' } };
         this.handlers = {};
         this.timers = [];
         this.logs = [];
@@ -38,7 +39,7 @@ class FakeAdapter {
         this.objects.set(id, { ...o, ...obj, common: { ...(o.common || {}), ...(obj.common || {}) } });
     }
     async getForeignObjectAsync() {
-        return { common: { language: "de" } };
+        return this.sysConfig;
     }
     async getForeignObjectsAsync(pattern) {
         const prefix = pattern.replace(`${this.namespace}.`, '').replace(/\*$/, '');
@@ -313,6 +314,40 @@ test('objects with custom settings are not deleted', async () => {
     assert.ok(a.objects.has('days.5.energy'), 'days.5 with influxdb kept');
     assert.ok(!a.objects.has('days.6'), 'days.6 deleted');
     assert.strictEqual(a.logs.filter(l => l.startsWith('warn') && l.includes('custom settings')).length, 2);
+});
+
+test('SVG numbers follow the system decimal separator', async () => {
+    const { fmt } = require('../lib/svg');
+    assert.strictEqual(fmt(12.84, 1, false), '12.8');
+    assert.strictEqual(fmt(12.84, 1, true), '12,8');
+    assert.strictEqual(fmt(2.5, 0, false), '3');
+    const payload = shiftToToday(freePayload);
+    for (const [sysConfig, re] of [
+        [{ common: { language: 'en', isFloatComma: false } }, /\d\.\d kWh/],
+        [{ common: { language: 'en', isFloatComma: true } }, /\d,\d kWh/],
+        [{ common: { language: 'de' } }, /\d,\d kWh/],
+    ]) {
+        mockFetch(url => (url.includes('/v2/sites/') ? { status: 200, body: [SITE] } : { status: 200, body: payload, headers: quota(33) }));
+        const a = createAdapter({ config: baseConfig, sysConfig });
+        await a.handlers.ready();
+        const svg = a.states.get('html.days').val;
+        assert.match(svg, re, JSON.stringify(sysConfig));
+    }
+});
+
+test('compute loop uses setTimeout chain, no setInterval', async () => {
+    const payload = shiftToToday(freePayload);
+    mockFetch(url => (url.includes('/v2/sites/') ? { status: 200, body: [SITE] } : { status: 200, body: payload, headers: quota(33) }));
+    const a = createAdapter({ config: baseConfig });
+    await a.handlers.ready();
+    const align = a.timers.find(t => t.type === 'timeout' && t.ms <= 5 * 60000 + 2000);
+    assert.ok(align, 'align timer');
+    align.fn();
+    await new Promise(r => setImmediate(r));
+    await new Promise(r => setImmediate(r));
+    assert.strictEqual(a.timers.filter(t => t.type === 'interval').length, 0);
+    const next = a.timers.filter(t => t.type === 'timeout' && t !== align && t.ms <= 5 * 60000 + 2000);
+    assert.ok(next.length >= 1, 'next compute scheduled');
 });
 
 test('invalid key: stops without forecast request', async () => {

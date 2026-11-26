@@ -71,6 +71,7 @@ class Pvnode extends utils.Adapter {
         this.stopped = false;
         this.created = new Set();
         this.lang = 'en';
+        this.floatComma = false;
         this.stringNames = [];
         this.pollOffsetMs = GRACE_MS + Math.floor(Math.random() * JITTER_MAX_MS);
         this.customWarned = new Set();
@@ -94,8 +95,14 @@ class Pvnode extends utils.Adapter {
         try {
             const sys = await this.getForeignObjectAsync('system.config');
             this.lang = sys && sys.common && sys.common.language === 'de' ? 'de' : 'en';
+            // decimal separator from the ioBroker system settings ("Use comma as decimal separator")
+            this.floatComma =
+                sys && sys.common && typeof sys.common.isFloatComma === 'boolean'
+                    ? sys.common.isFloatComma
+                    : this.lang === 'de';
         } catch {
             this.lang = 'en';
+            this.floatComma = false;
         }
 
         const apiKey = String(this.config.apiKey || '').trim();
@@ -166,7 +173,7 @@ class Pvnode extends utils.Adapter {
                 this.clearTimeout(this.computeAlignTimer);
             }
             if (this.computeTimer) {
-                this.clearInterval(this.computeTimer);
+                this.clearTimeout(this.computeTimer);
             }
         } finally {
             callback();
@@ -447,7 +454,7 @@ class Pvnode extends utils.Adapter {
     async updateCharts() {
         const now = Date.now();
         const p = this.prepared;
-        const opt = { lang: this.lang, stringNames: this.stringNames };
+        const opt = { lang: this.lang, floatComma: this.floatComma, stringNames: this.stringNames };
         const tomorrow = p.values.map(v => localDate(v.t, p.tz)).find(d => d > localDate(now, p.tz));
         const charts = {
             'html.today': () => dayChart(p, now, opt),
@@ -465,11 +472,25 @@ class Pvnode extends utils.Adapter {
         const toNext = COMPUTE_INTERVAL_MS - (now % COMPUTE_INTERVAL_MS) + 2000;
         this.computeAlignTimer = this.setTimeout(() => {
             this.computeAlignTimer = null;
-            this.updateComputed().catch(e => this.log.warn(`Compute failed: ${e.message}`));
-            this.computeTimer = this.setInterval(() => {
-                this.updateComputed().catch(e => this.log.warn(`Compute failed: ${e.message}`));
-            }, COMPUTE_INTERVAL_MS);
+            this.computeLoop();
         }, toNext);
+    }
+
+    /**
+     * Local computation every 5 minutes. The next run is scheduled only after the current
+     * one has finished (setTimeout chain instead of setInterval), so runs can never overlap.
+     */
+    computeLoop() {
+        this.computeTimer = null;
+        this.updateComputed()
+            .catch(e => this.log.warn(`Compute failed: ${e.message}`))
+            .finally(() => {
+                if (this.stopped) {
+                    return;
+                }
+                const delay = COMPUTE_INTERVAL_MS - (Date.now() % COMPUTE_INTERVAL_MS) + 2000;
+                this.computeTimer = this.setTimeout(() => this.computeLoop(), delay);
+            });
     }
 
     // ------------------------------------------------------------------ objects
@@ -632,7 +653,7 @@ class Pvnode extends utils.Adapter {
         };
         this.stringNames = strings.map(st => {
             const c = compass(st.orientation);
-            return `${(this.lang === 'de' ? dirDe : dirEn)[c] || c} ${Number(st.power_kw).toLocaleString(this.lang === 'de' ? 'de-DE' : 'en-US')} kWp`;
+            return `${(this.lang === 'de' ? dirDe : dirEn)[c] || c} ${this.floatComma ? String(Number(st.power_kw)).replace('.', ',') : String(Number(st.power_kw))} kWp`;
         });
         for (let i = 0; i < strings.length && i < MAX_STRINGS; i++) {
             const s = strings[i];

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "pvnode",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "news": {
+      "0.2.5": {
+        "en": "Chart numbers use the decimal separator from the system settings; 5-minute computation can no longer overlap",
+        "de": "Zahlen in den Diagrammen nutzen das Dezimaltrennzeichen aus den Systemeinstellungen; die 5-Minuten-Berechnung kann sich nicht mehr überschneiden",
+        "ru": "Числа на графиках используют десятичный разделитель из системных настроек; 5-минутный расчёт больше не может перекрываться",
+        "pt": "Os números nos gráficos usam o separador decimal das definições do sistema; o cálculo de 5 minutos já não se pode sobrepor",
+        "nl": "Getallen in de grafieken gebruiken het decimaalteken uit de systeeminstellingen; de 5-minutenberekening kan niet meer overlappen",
+        "fr": "Les nombres des graphiques utilisent le séparateur décimal des paramètres système ; le calcul toutes les 5 minutes ne peut plus se chevaucher",
+        "it": "I numeri nei grafici usano il separatore decimale delle impostazioni di sistema; il calcolo ogni 5 minuti non può più sovrapporsi",
+        "es": "Los números de los gráficos usan el separador decimal de la configuración del sistema; el cálculo de 5 minutos ya no puede solaparse",
+        "pl": "Liczby na wykresach używają separatora dziesiętnego z ustawień systemu; 5-minutowe obliczenia nie mogą się już nakładać",
+        "uk": "Числа на графіках використовують десятковий роздільник із системних налаштувань; 5-хвилинний розрахунок більше не може накладатися",
+        "zh-cn": "图表中的数字使用系统设置中的小数分隔符；每 5 分钟的计算不再会重叠"
+      },
       "0.2.4": {
         "en": "States with custom settings (history etc.) are no longer deleted, random delay before forecast requests, small code cleanups",
         "de": "Datenpunkte mit Custom-Einstellungen (History usw.) werden nicht mehr gelöscht, zufällige Verzögerung vor Prognose-Abfragen, kleine Code-Aufräumarbeiten",
